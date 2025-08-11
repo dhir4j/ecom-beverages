@@ -1,0 +1,49 @@
+"use client";
+
+import Image from "next/image";
+import Link from "next/link";
+import { useCart } from "@/context/cart-context";
+import type { CartItem as CartItemType } from "@/types";
+import { Button } from "@/components/ui/button";
+import { QuantitySelector } from "../common/quantity-selector";
+import { X } from "lucide-react";
+
+interface CartItemProps {
+  item: CartItemType;
+}
+
+export function CartItem({ item }: CartItemProps) {
+  const { updateQuantity, removeFromCart } = useCart();
+
+  return (
+    <div className="flex items-center gap-4 py-4">
+      <div className="relative h-24 w-24 flex-shrink-0">
+        <Image
+          src={item.image}
+          alt={item.name}
+          fill
+          className="rounded-md object-cover"
+          data-ai-hint="beverage product"
+        />
+      </div>
+      <div className="flex-grow">
+        <Link href={`/product/${item.productId}`}>
+          <h3 className="font-semibold hover:text-primary">{item.name}</h3>
+        </Link>
+        <p className="text-sm text-muted-foreground">{item.variantName}</p>
+        <p className="mt-1 text-sm font-medium">₹{item.price.toFixed(2)}</p>
+      </div>
+      <div className="flex flex-col items-end gap-2">
+        <QuantitySelector
+          quantity={item.quantity}
+          setQuantity={(q) => updateQuantity(item.variantId, q)}
+        />
+        <p className="text-lg font-bold">₹{(item.price * item.quantity).toFixed(2)}</p>
+      </div>
+      <Button variant="ghost" size="icon" className="h-8 w-8" onClick={() => removeFromCart(item.variantId)}>
+        <X className="h-5 w-5" />
+        <span className="sr-only">Remove item</span>
+      </Button>
+    </div>
+  );
+}
