@@ -5,7 +5,7 @@ import { Button } from "@/components/ui/button";
 export function Hero() {
   return (
     <section className="w-full">
-      <div className="container mx-auto grid grid-cols-1 items-center gap-8 px-4 py-16 md:grid-cols-2 md:py-24">
+      <div className="container mx-auto grid grid-cols-1 items-center gap-8 px-4 py-16 md:grid-cols-2 md:py-24 lg:px-8">
         <div className="flex flex-col items-start space-y-6">
           <h1 className="text-4xl font-bold tracking-tighter text-foreground sm:text-5xl md:text-6xl">
             Your Premier Beverage Distributor
