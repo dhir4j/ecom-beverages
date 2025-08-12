@@ -83,7 +83,7 @@ function HeaderContent() {
                     alt="SK Traders Logo"
                     width={150}
                     height={40}
-                    className="h-10 w-auto"
+                    className="h-12 w-auto"
                 />
             </Link>
             <RadioGroup value={currentMode} onValueChange={handleModeChange} className="grid grid-cols-2 gap-2 rounded-full border bg-muted p-1 w-52">
@@ -147,7 +147,7 @@ function HeaderContent() {
                     alt="SK Traders Logo"
                     width={150}
                     height={40}
-                    className="h-10 w-auto"
+                    className="h-12 w-auto"
                 />
             </Link>
              <Link
