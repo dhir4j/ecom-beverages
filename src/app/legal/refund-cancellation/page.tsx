@@ -1,5 +1,5 @@
 
-import { Package, XCircle, CheckCircle } from 'lucide-react';
+import { Package } from 'lucide-react';
 
 export default function RefundCancellationPage() {
   return (
@@ -54,7 +54,7 @@ export default function RefundCancellationPage() {
 
         <h2>Contact Us</h2>
         <p>
-          For any questions related to refunds and cancellations, please contact our customer support team. We are here to assist you.
+          For any questions related to refunds and cancellations, please contact our customer support team.
         </p>
       </main>
     </div>

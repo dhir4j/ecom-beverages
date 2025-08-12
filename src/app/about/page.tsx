@@ -1,30 +1,22 @@
 
 import { Building, Target, Users, Heart } from 'lucide-react';
-import Image from 'next/image';
 
 export default function AboutPage() {
   return (
     <div className="bg-background text-foreground">
-      <header className="relative h-[40vh] min-h-[300px]">
-        <Image
-          src="https://placehold.co/1920x1080.png"
-          alt="Beverages assortment"
-          fill
-          className="object-cover"
-          data-ai-hint="beverages assortment"
-        />
-        <div className="absolute inset-0 bg-gradient-to-t from-background to-black/50" />
-        <div className="container relative mx-auto flex h-full flex-col items-center justify-center px-4 text-center text-white">
-          <h1 className="text-4xl font-bold md:text-6xl">About SK Traders</h1>
-          <p className="mt-4 max-w-2xl text-lg md:text-xl">
+      <header className="relative bg-primary/10 py-16 text-center">
+        <div className="container mx-auto px-4">
+          <Building className="mx-auto mb-4 h-16 w-16 text-primary" />
+          <h1 className="text-4xl font-bold md:text-6xl text-primary">About SK Traders</h1>
+          <p className="mt-4 max-w-2xl mx-auto text-lg md:text-xl text-muted-foreground">
             Your trusted partner for premium beverages, serving both retail customers and wholesale clients with excellence.
           </p>
         </div>
       </header>
 
       <main className="container mx-auto px-4 py-16 sm:py-24">
-        <section className="grid grid-cols-1 gap-12 md:grid-cols-2">
-          <div className="flex flex-col justify-center">
+        <section className="grid grid-cols-1 gap-12">
+          <div className="flex flex-col justify-center text-center max-w-3xl mx-auto">
             <h2 className="text-3xl font-bold text-primary">Our Story</h2>
             <p className="mt-4 text-lg text-muted-foreground">
               Founded with a passion for bringing the best beverages to our community, SK Traders started as a small local shop. With a commitment to quality, variety, and unbeatable prices, we have grown into a leading hub for both retail and wholesale customers across Hyderabad and beyond.
@@ -32,15 +24,6 @@ export default function AboutPage() {
             <p className="mt-4 text-muted-foreground">
               Our journey is fueled by a simple mission: to be the most reliable and customer-centric beverage supplier. We believe in building lasting relationships, understanding the needs of our clients, and delivering not just products, but satisfaction.
             </p>
-          </div>
-          <div className="relative h-80 w-full overflow-hidden rounded-lg shadow-lg">
-            <Image
-              src="https://placehold.co/600x400.png"
-              alt="SK Traders storefront"
-              fill
-              className="object-cover transition-transform duration-500 hover:scale-105"
-              data-ai-hint="storefront"
-            />
           </div>
         </section>
 

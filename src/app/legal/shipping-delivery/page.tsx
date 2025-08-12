@@ -1,5 +1,5 @@
 
-import { Truck, Map, Clock } from 'lucide-react';
+import { Truck } from 'lucide-react';
 
 export default function ShippingDeliveryPage() {
   return (
