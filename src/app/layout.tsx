@@ -1,6 +1,7 @@
+
 import type {Metadata} from 'next';
 import './globals.css';
-import { Inter, Poppins, Pacifico } from 'next/font/google';
+import { Inter, Poppins, Pacifico, Playfair_Display } from 'next/font/google';
 import { cn } from '@/lib/utils';
 import { Header } from '@/components/common/header';
 import { Footer } from '@/components/common/footer';
@@ -20,6 +21,12 @@ const pacifico = Pacifico({
   weight: ['400'],
   variable: '--font-pacifico',
 });
+const playfairDisplay = Playfair_Display({
+  subsets: ['latin'],
+  weight: ['700'],
+  variable: '--font-playfair-display',
+});
+
 
 export const metadata: Metadata = {
   title: 'SK Traders - Beverage Hub',
@@ -36,9 +43,9 @@ export default function RootLayout({
       <head>
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
-        <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&family=Pacifico&family=Poppins:wght@600;700&display=swap" rel="stylesheet" />
+        <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&family=Pacifico&family=Poppins:wght@600;700&family=Playfair+Display:wght@700&display=swap" rel="stylesheet" />
       </head>
-      <body className={cn('font-body antialiased flex flex-col min-h-screen', inter.variable, poppins.variable, pacifico.variable)}>
+      <body className={cn('font-body antialiased flex flex-col min-h-screen', inter.variable, poppins.variable, pacifico.variable, playfairDisplay.variable)}>
         <ThemeProvider
             attribute="class"
             defaultTheme="dark"
@@ -46,9 +53,7 @@ export default function RootLayout({
             disableTransitionOnChange
         >
             <CartProvider>
-                <Suspense fallback={<div>Loading...</div>}>
-                    <Header />
-                </Suspense>
+                <Header />
                 <main className="flex-grow">{children}</main>
                 <Footer />
                 <Toaster />

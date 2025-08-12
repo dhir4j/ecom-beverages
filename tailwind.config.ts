@@ -1,3 +1,4 @@
+
 import type {Config} from 'tailwindcss';
 
 export default {
@@ -19,6 +20,7 @@ export default {
       fontFamily: {
         body: ['var(--font-inter)', 'sans-serif'],
         headline: ['var(--font-poppins)', 'sans-serif'],
+        logo: ['var(--font-playfair-display)', 'serif'],
         pacifico: ['var(--font-pacifico)', 'cursive'],
         code: ['monospace'],
       },

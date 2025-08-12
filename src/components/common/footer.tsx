@@ -1,3 +1,4 @@
+
 import { Mail, MapPin, Phone } from "lucide-react";
 import Link from "next/link";
 import { getCategories } from "@/lib/products";
@@ -18,7 +19,7 @@ export async function Footer() {
                     height={50}
                     className="h-12 w-auto"
                 />
-                <span className="font-headline text-2xl font-bold">SK Traders</span>
+                <span className="font-logo text-2xl font-bold text-primary">SK Traders</span>
             </Link>
             <p className="text-sm">
                 Your one-stop destination for wholesale and retail beverages. Quality products, unbeatable prices.
