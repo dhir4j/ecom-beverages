@@ -15,10 +15,11 @@ interface ProductCardProps {
 export function ProductCard({ product }: ProductCardProps) {
   const pathname = usePathname();
   const isWholesale = pathname.startsWith('/wholesale');
+  const productUrl = isWholesale ? `/p/${product.id}?mode=wholesale` : `/p/${product.id}`;
 
   return (
     <Card className="flex h-full flex-col overflow-hidden transition-shadow duration-300 hover:shadow-lg group">
-       <Link href={`/p/${product.id}`} className="flex flex-col h-full">
+       <Link href={productUrl} className="flex flex-col h-full">
         <CardHeader className="p-0">
             <div className="aspect-square relative w-full overflow-hidden">
                 <Image

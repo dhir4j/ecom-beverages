@@ -5,19 +5,22 @@ import { useState } from 'react';
 import Image from 'next/image';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Card, CardContent } from '@/components/ui/card';
 import { Separator } from '@/components/ui/separator';
 import { Table, TableBody, TableCell, TableRow } from '@/components/ui/table';
 import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from '@/components/ui/carousel';
 import { ProductCard } from '@/components/product/product-card';
 import type { Product } from '@/types/product';
 import { useCart } from '@/context/cart-context';
-import { useRouter, usePathname } from 'next/navigation';
+import { useRouter } from 'next/navigation';
 import { useToast } from '@/hooks/use-toast';
+import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
+import { Info } from 'lucide-react';
 
 interface ProductDetailsClientProps {
   product: Product;
   similarProducts: Product[];
+  isWholesale: boolean;
 }
 
 const Description = ({ text }: { text: string }) => {
@@ -38,13 +41,10 @@ const Description = ({ text }: { text: string }) => {
   );
 };
 
-export function ProductDetailsClient({ product, similarProducts }: ProductDetailsClientProps) {
+export function ProductDetailsClient({ product, similarProducts, isWholesale }: ProductDetailsClientProps) {
     const { addToCart } = useCart();
     const router = useRouter();
-    const pathname = usePathname();
     const { toast } = useToast();
-
-    const isWholesale = pathname.startsWith('/wholesale');
     
     const handleAddToCart = () => {
         const price = parseFloat(product.discounted_price.replace('₹', ''));
@@ -104,6 +104,16 @@ export function ProductDetailsClient({ product, similarProducts }: ProductDetail
                     <Badge variant="destructive" className="mt-2 text-base">{product.discount_percentage}</Badge>
                 )}
             </div>
+
+            {isWholesale && (
+              <Alert>
+                <Info className="h-4 w-4" />
+                <AlertTitle>Wholesale Notice</AlertTitle>
+                <AlertDescription>
+                  Minimum order quantity is 100 units.
+                </AlertDescription>
+              </Alert>
+            )}
 
             <div className="flex gap-4">
                 <Button size="lg" className="flex-1" onClick={handleBuyNow}>Buy Now</Button>

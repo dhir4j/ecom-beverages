@@ -2,7 +2,7 @@
 "use client";
 
 import Link from "next/link";
-import { usePathname } from "next/navigation";
+import { usePathname, useSearchParams } from "next/navigation";
 import {
   Sheet,
   SheetContent,
@@ -19,10 +19,6 @@ import { useTheme } from "@/context/theme-provider";
 import { Input } from "../ui/input";
 import { useRouter } from "next/navigation";
 import { cn } from "@/lib/utils";
-
-const navLinks: { href: string; label: string }[] = [
-    { href: '/shop', label: 'All Items' },
-];
 
 function ThemeSwitcher() {
     const { theme, setTheme } = useTheme();
@@ -45,6 +41,7 @@ export function Header() {
   const isMobile = useIsMobile();
   const router = useRouter();
   const pathname = usePathname();
+  const searchParams = useSearchParams();
 
   const handleModeChange = (value: string) => {
     if (value === 'retail') {
@@ -54,7 +51,9 @@ export function Header() {
     }
   };
 
-  const currentMode = pathname.startsWith('/wholesale') ? 'wholesale' : 'retail';
+  const isWholesalePath = pathname.startsWith('/wholesale');
+  const isWholesaleQuery = searchParams.get('mode') === 'wholesale';
+  const currentMode = isWholesalePath || isWholesaleQuery ? 'wholesale' : 'retail';
 
   const handleSearch = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -129,15 +128,12 @@ export function Header() {
                 <Bot className="h-6 w-6 text-primary" />
                 <span className="font-bold">SK Traders</span>
             </Link>
-            {navLinks.map((link) => (
-                <Link
-                key={link.href}
-                href={link.href}
-                className={cn("block px-2 py-1 text-lg", pathname.startsWith(link.href) ? "text-primary" : "")}
+             <Link
+                href="/shop"
+                className={cn("block px-2 py-1 text-lg", pathname.startsWith("/shop") ? "text-primary" : "")}
                 >
-                {link.label}
-                </Link>
-            ))}
+                All Items
+             </Link>
                 <RadioGroup value={currentMode} onValueChange={handleModeChange} className="grid grid-cols-2 gap-2 rounded-full border bg-muted p-1">
                 <div>
                     <RadioGroupItem value="retail" id="r1-mobile" className="sr-only" />
@@ -182,7 +178,7 @@ export function Header() {
   );
 
   return (
-    <header className="sticky top-0 z-50 w-full border-b bg-primary/20 backdrop-blur-md transition-colors duration-300">
+    <header className="sticky top-0 z-50 w-full border-b bg-secondary/20 backdrop-blur-md transition-colors duration-300">
       <div className="container flex h-24 items-center">
         {isMobile ? mobileHeader : desktopHeader}
       </div>
