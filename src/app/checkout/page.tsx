@@ -1,3 +1,4 @@
+
 "use client";
 
 import { useCart } from "@/context/cart-context";
@@ -8,7 +9,7 @@ import Image from "next/image";
 
 export default function CheckoutPage() {
   const { cartItems, totalPrice } = useCart();
-  const shipping = totalPrice > 500 ? 0 : 50;
+  const shipping = totalPrice >= 500 ? 0 : 100;
   const total = totalPrice + shipping;
 
   return (

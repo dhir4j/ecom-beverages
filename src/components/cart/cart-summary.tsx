@@ -1,3 +1,4 @@
+
 "use client";
 
 import { useCart } from "@/context/cart-context";
@@ -39,7 +40,7 @@ export function CartSummary() {
   };
 
   const subtotal = totalPrice;
-  const shipping = subtotal > 500 ? 0 : 50;
+  const shipping = subtotal >= 500 ? 0 : 100;
   const total = subtotal + shipping;
 
   return (
@@ -52,9 +53,14 @@ export function CartSummary() {
           <span>Subtotal ({itemCount} items)</span>
           <span>₹{subtotal.toFixed(2)}</span>
         </div>
-        <div className="flex justify-between">
-          <span>Shipping</span>
-          <span>{shipping === 0 ? 'Free' : `₹${shipping.toFixed(2)}`}</span>
+        <div className="flex flex-col">
+            <div className="flex justify-between">
+              <span>Shipping</span>
+              <span>{shipping === 0 ? 'Free' : `₹${shipping.toFixed(2)}`}</span>
+            </div>
+            <p className="text-xs text-muted-foreground mt-1">
+                Free shipping on orders above ₹500. A ₹100 fee applies to orders below ₹500.
+            </p>
         </div>
         <Separator />
         <div className="flex justify-between text-lg font-bold">
