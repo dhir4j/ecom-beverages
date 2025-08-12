@@ -214,16 +214,6 @@ function HeaderContent() {
                 >
                 All Items
              </Link>
-                <RadioGroup value={currentMode} onValueChange={handleModeChange} className="grid grid-cols-2 gap-2 rounded-full border bg-muted p-1">
-                <div>
-                    <RadioGroupItem value="retail" id="r1-mobile" className="sr-only" />
-                    <Label htmlFor="r1-mobile" className={cn("block w-full rounded-full py-1.5 text-center text-sm font-medium cursor-pointer", currentMode === 'retail' ? 'bg-primary text-primary-foreground' : 'hover:bg-accent')}>Retail</Label>
-                </div>
-                <div>
-                    <RadioGroupItem value="wholesale" id="r2-mobile" className="sr-only" />
-                    <Label htmlFor="r2-mobile" className={cn("block w-full rounded-full py-1.5 text-center text-sm font-medium cursor-pointer", currentMode === 'wholesale' ? 'bg-primary text-primary-foreground' : 'hover:bg-accent')}>Wholesale</Label>
-                </div>
-            </RadioGroup>
             </nav>
         </SheetContent>
         </Sheet>
@@ -289,6 +279,22 @@ function HeaderContent() {
       <div className="container flex h-24 items-center">
         {isMobile ? mobileHeader : desktopHeader}
       </div>
+      {isMobile && (
+        <div className="md:hidden bg-background/80 backdrop-blur-md border-b">
+          <div className="container p-2">
+            <RadioGroup value={currentMode} onValueChange={handleModeChange} className="grid grid-cols-2 gap-2 rounded-full border bg-muted p-1">
+              <div>
+                  <RadioGroupItem value="retail" id="r1-mobile-bar" className="sr-only" />
+                  <Label htmlFor="r1-mobile-bar" className={cn("block w-full rounded-full py-1.5 text-center text-sm font-medium cursor-pointer transition-colors", currentMode === 'retail' ? 'bg-primary text-primary-foreground' : 'hover:bg-accent')}>Retail</Label>
+              </div>
+              <div>
+                  <RadioGroupItem value="wholesale" id="r2-mobile-bar" className="sr-only" />
+                  <Label htmlFor="r2-mobile-bar" className={cn("block w-full rounded-full py-1.5 text-center text-sm font-medium cursor-pointer transition-colors", currentMode === 'wholesale' ? 'bg-primary text-primary-foreground' : 'hover:bg-accent')}>Wholesale</Label>
+              </div>
+            </RadioGroup>
+          </div>
+        </div>
+      )}
     </header>
   );
 }
