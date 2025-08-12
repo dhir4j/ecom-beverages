@@ -12,7 +12,7 @@ import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious
 import { ProductCard } from '@/components/product/product-card';
 import type { Product } from '@/types/product';
 import { useCart } from '@/context/cart-context';
-import { useRouter } from 'next/navigation';
+import { useRouter, usePathname } from 'next/navigation';
 import { useToast } from '@/hooks/use-toast';
 
 interface ProductDetailsClientProps {
@@ -41,17 +41,21 @@ const Description = ({ text }: { text: string }) => {
 export function ProductDetailsClient({ product, similarProducts }: ProductDetailsClientProps) {
     const { addToCart } = useCart();
     const router = useRouter();
+    const pathname = usePathname();
     const { toast } = useToast();
 
+    const isWholesale = pathname.startsWith('/wholesale');
+    
     const handleAddToCart = () => {
         const price = parseFloat(product.discounted_price.replace('₹', ''));
         addToCart({
             productId: product.id,
-            variantId: product.id, // Using product id as variantId for simplicity
+            variantId: product.id,
             name: product.name,
             variantName: product.size || 'Standard',
             image: product.image_url,
-            price: price,
+            price: isWholesale ? price : parseFloat(product.original_price.replace('₹', '')),
+            quantity: isWholesale ? 100 : 1,
         });
     };
 
@@ -85,12 +89,18 @@ export function ProductDetailsClient({ product, similarProducts }: ProductDetail
                  {product.size && <p className="text-lg text-muted-foreground mt-1">{product.size}</p>}
                  <Separator className="my-4" />
                 <div className="flex items-baseline gap-4">
-                    <p className="text-4xl font-bold text-primary">{product.discounted_price}</p>
-                    {product.original_price && (
-                        <p className="text-xl text-muted-foreground line-through">{product.original_price}</p>
-                    )}
+                  {isWholesale ? (
+                    <>
+                      <p className="text-4xl font-bold text-primary">{product.discounted_price}</p>
+                      {product.original_price && (
+                          <p className="text-xl text-muted-foreground line-through">{product.original_price}</p>
+                      )}
+                    </>
+                  ) : (
+                    <p className="text-4xl font-bold text-primary">{product.original_price}</p>
+                  )}
                 </div>
-                {product.discount_percentage && (
+                {isWholesale && product.discount_percentage && (
                     <Badge variant="destructive" className="mt-2 text-base">{product.discount_percentage}</Badge>
                 )}
             </div>

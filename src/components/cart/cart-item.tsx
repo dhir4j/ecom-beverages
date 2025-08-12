@@ -1,3 +1,4 @@
+
 "use client";
 
 import Image from "next/image";
@@ -7,6 +8,7 @@ import type { CartItem as CartItemType } from "@/types";
 import { Button } from "@/components/ui/button";
 import { QuantitySelector } from "../common/quantity-selector";
 import { X } from "lucide-react";
+import { usePathname } from "next/navigation";
 
 interface CartItemProps {
   item: CartItemType;
@@ -14,6 +16,8 @@ interface CartItemProps {
 
 export function CartItem({ item }: CartItemProps) {
   const { updateQuantity, removeFromCart } = useCart();
+  const pathname = usePathname();
+  const isWholesale = pathname.startsWith('/wholesale');
 
   return (
     <div className="flex items-center gap-4 py-4">
@@ -27,7 +31,7 @@ export function CartItem({ item }: CartItemProps) {
         />
       </div>
       <div className="flex-grow">
-        <Link href={`/product/${item.productId}`}>
+        <Link href={`/p/${item.productId}`}>
           <h3 className="font-semibold hover:text-primary">{item.name}</h3>
         </Link>
         <p className="text-sm text-muted-foreground">{item.variantName}</p>
@@ -37,6 +41,7 @@ export function CartItem({ item }: CartItemProps) {
         <QuantitySelector
           quantity={item.quantity}
           setQuantity={(q) => updateQuantity(item.variantId, q)}
+          min={isWholesale ? 100 : 1}
         />
         <p className="text-lg font-bold">₹{(item.price * item.quantity).toFixed(2)}</p>
       </div>

@@ -1,3 +1,4 @@
+
 "use client";
 
 import Image from "next/image";
@@ -5,12 +6,16 @@ import Link from "next/link";
 import type { Product } from "@/types/product";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
+import { usePathname } from "next/navigation";
 
 interface ProductCardProps {
   product: Product;
 }
 
 export function ProductCard({ product }: ProductCardProps) {
+  const pathname = usePathname();
+  const isWholesale = pathname.startsWith('/wholesale');
+
   return (
     <Card className="flex h-full flex-col overflow-hidden transition-shadow duration-300 hover:shadow-lg group">
        <Link href={`/p/${product.id}`} className="flex flex-col h-full">
@@ -30,11 +35,17 @@ export function ProductCard({ product }: ProductCardProps) {
             <CardDescription>{product.size}</CardDescription>
         </CardContent>
         <CardFooter className="p-4 pt-0 flex-col items-start">
-             <div className="flex items-baseline gap-2 mb-2">
-                <p className="text-xl font-bold text-primary">{product.discounted_price}</p>
-                {product.original_price && <p className="text-sm text-muted-foreground line-through">{product.original_price}</p>}
-            </div>
-            {product.discount_percentage && <Badge variant="destructive">{product.discount_percentage}</Badge>}
+             {isWholesale ? (
+               <>
+                <div className="flex items-baseline gap-2 mb-2">
+                  <p className="text-xl font-bold text-primary">{product.discounted_price}</p>
+                  {product.original_price && <p className="text-sm text-muted-foreground line-through">{product.original_price}</p>}
+                </div>
+                {product.discount_percentage && <Badge variant="destructive">{product.discount_percentage}</Badge>}
+               </>
+             ) : (
+                <p className="text-xl font-bold text-primary">{product.original_price}</p>
+             )}
         </CardFooter>
        </Link>
     </Card>
