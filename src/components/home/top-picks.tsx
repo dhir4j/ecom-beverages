@@ -33,7 +33,7 @@ async function TopPicksForCategory({ category }: { category: string }) {
 }
 
 export async function TopPicks() {
-  const categories = ["Cold Drinks", "Nutritional Drinks", "Juices", "Energy Drinks"];
+  const categories = ["Cold Drinks", "Nutritional Drinks", "Juices", "Energy Drinks", "Packaged Water"];
 
   return (
     <section className="py-16 sm:py-24">
