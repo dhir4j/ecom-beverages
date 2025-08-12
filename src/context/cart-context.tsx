@@ -3,7 +3,7 @@
 
 import type { CartItem } from "@/types";
 import { useToast } from "@/hooks/use-toast";
-import React, { createContext, useContext, useEffect, useState } from "react";
+import React, { createContext, useContext, useEffect, useState, useCallback } from "react";
 
 interface CartContextType {
   cartItems: CartItem[];
@@ -24,9 +24,14 @@ export const CartProvider: React.FC<{ children: React.ReactNode }> = ({
   const { toast } = useToast();
 
   useEffect(() => {
-    const storedCart = localStorage.getItem("cart");
-    if (storedCart) {
-      setCartItems(JSON.parse(storedCart));
+    try {
+        const storedCart = localStorage.getItem("cart");
+        if (storedCart) {
+            setCartItems(JSON.parse(storedCart));
+        }
+    } catch (error) {
+        console.error("Failed to parse cart from localStorage", error);
+        setCartItems([]);
     }
   }, []);
 
@@ -34,41 +39,40 @@ export const CartProvider: React.FC<{ children: React.ReactNode }> = ({
     localStorage.setItem("cart", JSON.stringify(cartItems));
   }, [cartItems]);
 
-  const addToCart = (item: Omit<CartItem, "quantity"> & { quantity?: number }) => {
+  const addToCart = useCallback((item: Omit<CartItem, "quantity"> & { quantity?: number }) => {
     const addQuantity = item.quantity || 1;
-    let itemUpdated = false;
+    let toastTitle = "";
+    let toastDescription = "";
 
-    const newCartItems = cartItems.map((i) => {
-      if (i.variantId === item.variantId) {
-        itemUpdated = true;
-        return { ...i, quantity: i.quantity + addQuantity };
-      }
-      return i;
+    setCartItems((prevItems) => {
+        const existingItem = prevItems.find((i) => i.variantId === item.variantId);
+
+        if (existingItem) {
+            toastTitle = "Item updated in cart";
+            toastDescription = `${existingItem.name} (${existingItem.variantName}) quantity increased.`;
+            return prevItems.map((i) =>
+                i.variantId === item.variantId
+                    ? { ...i, quantity: i.quantity + addQuantity }
+                    : i
+            );
+        } else {
+            toastTitle = "Item added to cart";
+            toastDescription = `${item.name} (${item.variantName}) has been added.`;
+            return [...prevItems, { ...item, quantity: addQuantity }];
+        }
     });
 
-    if (itemUpdated) {
-        setCartItems(newCartItems);
-        const existingItem = cartItems.find(i => i.variantId === item.variantId);
-        if (existingItem) {
-             toast({
-                title: "Item updated in cart",
-                description: `${existingItem.name} (${existingItem.variantName}) quantity increased.`,
-            });
-        }
-    } else {
-        setCartItems([...cartItems, { ...item, quantity: addQuantity }]);
-        toast({
-            title: "Item added to cart",
-            description: `${item.name} (${item.variantName}) has been added.`,
-        });
-    }
-  };
+    toast({
+        title: toastTitle,
+        description: toastDescription,
+    });
+  }, [toast]);
+
 
   const removeFromCart = (variantId: string) => {
     const itemToRemove = cartItems.find((i) => i.variantId === variantId);
-    setCartItems((prevItems) => {
-      return prevItems.filter((item) => item.variantId !== variantId);
-    });
+    setCartItems((prevItems) => prevItems.filter((item) => item.variantId !== variantId));
+    
     if (itemToRemove) {
       toast({
         title: "Item removed from cart",

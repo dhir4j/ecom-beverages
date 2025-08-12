@@ -8,9 +8,8 @@ import Image from "next/image";
 
 export default function CheckoutPage() {
   const { cartItems, totalPrice } = useCart();
-  const taxes = totalPrice * 0.18;
   const shipping = totalPrice > 500 ? 0 : 50;
-  const total = totalPrice + taxes + shipping;
+  const total = totalPrice + shipping;
 
   return (
     <div className="container mx-auto px-4 py-8">
@@ -51,10 +50,6 @@ export default function CheckoutPage() {
                 <div className="flex justify-between">
                   <span>Subtotal</span>
                   <span>₹{totalPrice.toFixed(2)}</span>
-                </div>
-                 <div className="flex justify-between">
-                  <span>Taxes (GST 18%)</span>
-                  <span>₹{taxes.toFixed(2)}</span>
                 </div>
                 <div className="flex justify-between">
                   <span>Shipping</span>

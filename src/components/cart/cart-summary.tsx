@@ -24,9 +24,8 @@ export function CartSummary() {
   };
 
   const subtotal = totalPrice;
-  const taxes = subtotal * 0.18; // Mock 18% GST
   const shipping = subtotal > 500 ? 0 : 50;
-  const total = subtotal + taxes + shipping;
+  const total = subtotal + shipping;
 
   return (
     <Card className="sticky top-20">
@@ -37,10 +36,6 @@ export function CartSummary() {
         <div className="flex justify-between">
           <span>Subtotal ({itemCount} items)</span>
           <span>₹{subtotal.toFixed(2)}</span>
-        </div>
-        <div className="flex justify-between">
-          <span>Taxes (GST 18%)</span>
-          <span>₹{taxes.toFixed(2)}</span>
         </div>
         <div className="flex justify-between">
           <span>Shipping</span>
