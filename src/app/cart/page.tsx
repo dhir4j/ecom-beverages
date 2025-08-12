@@ -45,7 +45,9 @@ function CartPageContent() {
             </Card>
           </div>
           <div>
-            <CartSummary />
+            <Suspense fallback={<Card><CardHeader><CardTitle>Order Summary</CardTitle></CardHeader><CardContent>Loading...</CardContent></Card>}>
+              <CartSummary />
+            </Suspense>
           </div>
         </div>
       ) : (
