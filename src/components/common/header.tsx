@@ -96,14 +96,14 @@ export function Header() {
         </div>
         <div className="flex items-center justify-end space-x-2">
             <ThemeSwitcher />
-            <Link href="/cart">
+            <Link href="/cart" className="relative">
               <Button variant="ghost" size="icon">
                 <ShoppingCart className="h-5 w-5" />
-                {itemCount > 0 && (
-                  <Badge className="absolute top-1 right-1 h-5 w-5 justify-center p-0">{itemCount}</Badge>
-                )}
                 <span className="sr-only">Shopping Cart</span>
               </Button>
+               {itemCount > 0 && (
+                  <Badge className="absolute top-0 right-0 h-5 w-5 justify-center p-0">{itemCount}</Badge>
+                )}
             </Link>
         </div>
     </div>
@@ -161,14 +161,14 @@ export function Header() {
         </div>
         <div className="flex items-center justify-end space-x-2">
             <ThemeSwitcher />
-            <Link href="/cart">
+            <Link href="/cart" className="relative">
                 <Button variant="ghost" size="icon">
-                <ShoppingCart className="h-5 w-5" />
-                {itemCount > 0 && (
-                    <Badge className="absolute top-1 right-1 h-5 w-5 justify-center p-0">{itemCount}</Badge>
-                )}
-                <span className="sr-only">Shopping Cart</span>
+                  <ShoppingCart className="h-5 w-5" />
+                  <span className="sr-only">Shopping Cart</span>
                 </Button>
+                {itemCount > 0 && (
+                    <Badge className="absolute top-0 right-0 h-5 w-5 justify-center p-0">{itemCount}</Badge>
+                )}
             </Link>
         </div>
     </>
