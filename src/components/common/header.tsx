@@ -11,7 +11,7 @@ import {
 } from "@/components/ui/sheet";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { Menu, ShoppingCart, Bot, Moon, Sun, Search, Briefcase } from "lucide-react";
+import { Menu, ShoppingCart, Bot, Moon, Sun, Search, Briefcase, LayoutGrid } from "lucide-react";
 import { useCart } from "@/context/cart-context";
 import { useIsMobile } from "@/hooks/use-mobile";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
@@ -191,7 +191,7 @@ function HeaderContent() {
         <Sheet>
         <SheetTrigger asChild>
             <Button variant="outline" size="icon" className="md:hidden">
-            <Menu className="h-5 w-5" />
+            <LayoutGrid className="h-5 w-5" />
             <span className="sr-only">Toggle Menu</span>
             </Button>
         </SheetTrigger>
