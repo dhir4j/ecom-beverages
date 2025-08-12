@@ -32,7 +32,7 @@ function ProductCardContent({ product, isWholesale: isWholesaleProp }: { product
             </div>
         </CardHeader>
         <CardContent className="p-4 flex-grow">
-            <CardTitle className="mb-2 text-base h-12 overflow-hidden leading-tight group-hover:text-primary">{product.name}</CardTitle>
+            <CardTitle className="mb-2 text-base leading-tight group-hover:text-primary">{product.name}</CardTitle>
             <CardDescription className="text-xs">{product.size}</CardDescription>
         </CardContent>
         <CardFooter className="p-4 pt-0 flex-col items-start">
