@@ -72,13 +72,13 @@ export function Header() {
             </Link>
              <nav className="flex items-center gap-4">
                 {navLinks.map((link) => (
-                    <Link
-                        key={link.href}
-                        href={link.href}
-                        className={cn("text-sm font-medium transition-colors hover:text-primary", pathname === link.href ? "text-primary" : "text-muted-foreground")}
-                    >
-                        {link.label}
-                    </Link>
+                    <Button key={link.href} asChild variant={pathname === link.href ? "secondary" : "ghost"} size="sm">
+                      <Link
+                          href={link.href}
+                      >
+                          {link.label}
+                      </Link>
+                    </Button>
                 ))}
             </nav>
         </div>
