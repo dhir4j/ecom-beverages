@@ -67,7 +67,7 @@ export default function CustomerCarePage() {
                   <MapPin className="h-6 w-6 text-primary mt-1" />
                   <div>
                     <h4 className="font-semibold">Our Address</h4>
-                    <p className="text-muted-foreground">H.no.2-43 Sai nagar colony, chaithanyapuri, dilsukhnagar, Hyderabad - 500060</p>
+                    <p className="text-muted-foreground">SK TRADERS, FLAT NO 2-43, SAI NAGAR COLONY, CHAITANYAPURI COLONY , Saroor Nagar Circle No.05, Hyderabad, Telangana-500060</p>
                   </div>
                 </div>
                  <div className="flex items-start gap-4">

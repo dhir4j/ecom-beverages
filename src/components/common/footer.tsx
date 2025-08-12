@@ -33,7 +33,7 @@ export async function Footer() {
                     height={60}
                     className="rounded-md"
                 />
-                <p className="text-xs">Lic. No. 12345678901234</p>
+                <p className="text-xs">Lic. No. 23625031003549</p>
              </div>
              <p className="text-xs pt-2"><span className="font-semibold">GSTIN:</span> 36CLPPN3613N1ZJ</p>
         </div>
@@ -70,7 +70,7 @@ export async function Footer() {
               <ul className="space-y-3">
                 <li className="flex items-start space-x-3">
                   <MapPin className="mt-1 h-5 w-5 shrink-0 text-primary" />
-                  <span>H.no.2-43 Sai nagar colony chaithanyapuri dilsukhnagar Hyderabad.500060</span>
+                  <span>SK TRADERS, FLAT NO 2-43, SAI NAGAR COLONY, CHAITANYAPURI COLONY , Saroor Nagar Circle No.05, Hyderabad, Telangana-500060</span>
                 </li>
                 <li className="flex items-center space-x-3">
                   <Phone className="h-5 w-5 text-primary" />

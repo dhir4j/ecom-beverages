@@ -78,7 +78,7 @@ export function InvoiceDetails() {
               <Bot className="h-10 w-10 text-primary" />
               <div>
                 <h1 className="text-2xl font-bold">SK Traders</h1>
-                <p className="text-sm text-muted-foreground">123 Beverage Lane, Market City, Mumbai, 400001</p>
+                <p className="text-sm text-muted-foreground">SK TRADERS, FLAT NO 2-43, SAI NAGAR COLONY, CHAITANYAPURI COLONY , Saroor Nagar Circle No.05, Hyderabad, Telangana-500060</p>
               </div>
             </div>
             <div className="text-left sm:text-right">
