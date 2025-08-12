@@ -16,7 +16,7 @@ export async function Footer() {
                     alt="SK Traders Logo"
                     width={150}
                     height={150}
-                    className="h-[137px] w-auto"
+                    className="h-[130px] w-auto"
                 />
             </Link>
             <p className="text-sm">
