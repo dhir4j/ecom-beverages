@@ -1,6 +1,6 @@
-import fs from 'fs/promises';
-import path from 'path';
+
 import type { Product, ProductData } from '@/types/product';
+import productData from '@/../data/product_data.json';
 
 // Utility to generate a URL-friendly slug from a string
 function slugify(text: string): string {
@@ -14,11 +14,9 @@ function slugify(text: string): string {
     .replace(/-+$/, ''); // Trim - from end of text
 }
 
-async function loadProducts(): Promise<Product[]> {
-  const filePath = path.join(process.cwd(), 'data', 'product_data.json');
+function loadProducts(): Product[] {
   try {
-    const jsonString = await fs.readFile(filePath, 'utf-8');
-    const data: ProductData[] = JSON.parse(jsonString);
+    const data: ProductData[] = productData;
 
     // Map and add a unique ID and a category field based on product type
     return data.map((product) => ({
@@ -32,23 +30,22 @@ async function loadProducts(): Promise<Product[]> {
   }
 }
 
+const products = loadProducts();
+
 export async function getProducts(): Promise<Product[]> {
-  return await loadProducts();
+  return products;
 }
 
 export async function getProductById(id: string): Promise<Product | undefined> {
-  const products = await loadProducts();
   return products.find((p) => p.id === id);
 }
 
 export async function getCategories(): Promise<string[]> {
-    const products = await loadProducts();
     const categories = new Set(products.map(p => p.category));
     return Array.from(categories);
 }
 
 export async function getFeaturedProducts(): Promise<Product[]> {
-    const products = await loadProducts();
     // For now, let's feature the first 4 products as a mock implementation
     return products.slice(0, 4);
 }
