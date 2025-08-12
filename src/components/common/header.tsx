@@ -70,17 +70,16 @@ export function Header() {
                 <Bot className="h-6 w-6 text-primary" />
                 <span className="font-bold">SK Traders</span>
             </Link>
-             <nav className="flex items-center gap-4">
-                {navLinks.map((link) => (
-                    <Button key={link.href} asChild variant={pathname === link.href ? "secondary" : "ghost"} size="sm">
-                      <Link
-                          href={link.href}
-                      >
-                          {link.label}
-                      </Link>
-                    </Button>
-                ))}
-            </nav>
+            <RadioGroup value={currentMode} onValueChange={handleModeChange} className="grid grid-cols-2 gap-2 rounded-full border bg-muted p-1 w-52">
+                <div>
+                    <RadioGroupItem value="retail" id="r1-desktop" className="sr-only" />
+                    <Label htmlFor="r1-desktop" className={cn("block w-full rounded-full py-1.5 text-center text-sm font-medium cursor-pointer transition-colors", currentMode === 'retail' ? 'bg-primary text-primary-foreground' : 'hover:bg-accent')}>Retail</Label>
+                </div>
+                <div>
+                    <RadioGroupItem value="wholesale" id="r2-desktop" className="sr-only" />
+                    <Label htmlFor="r2-desktop" className={cn("block w-full rounded-full py-1.5 text-center text-sm font-medium cursor-pointer transition-colors", currentMode === 'wholesale' ? 'bg-primary text-primary-foreground' : 'hover:bg-accent')}>Wholesale</Label>
+                </div>
+            </RadioGroup>
         </div>
         <div className="flex justify-center">
              <form onSubmit={handleSearch} className="relative w-full max-w-sm">
@@ -96,16 +95,9 @@ export function Header() {
             </form>
         </div>
         <div className="flex items-center justify-end space-x-2">
-            <RadioGroup value={currentMode} onValueChange={handleModeChange} className="grid grid-cols-2 gap-2 rounded-full border bg-muted p-1 w-52">
-                <div>
-                    <RadioGroupItem value="retail" id="r1-desktop" className="sr-only" />
-                    <Label htmlFor="r1-desktop" className={cn("block w-full rounded-full py-1.5 text-center text-sm font-medium cursor-pointer transition-colors", currentMode === 'retail' ? 'bg-primary text-primary-foreground' : 'hover:bg-accent')}>Retail</Label>
-                </div>
-                <div>
-                    <RadioGroupItem value="wholesale" id="r2-desktop" className="sr-only" />
-                    <Label htmlFor="r2-desktop" className={cn("block w-full rounded-full py-1.5 text-center text-sm font-medium cursor-pointer transition-colors", currentMode === 'wholesale' ? 'bg-primary text-primary-foreground' : 'hover:bg-accent')}>Wholesale</Label>
-                </div>
-            </RadioGroup>
+            <Button asChild variant={pathname === "/shop" ? "secondary" : "ghost"} size="sm">
+                <Link href="/shop">All Items</Link>
+             </Button>
             <ThemeSwitcher />
             <div className="relative">
               <Link href="/cart">
