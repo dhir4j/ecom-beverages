@@ -20,6 +20,7 @@ import { useRouter } from "next/navigation";
 import { cn } from "@/lib/utils";
 
 const navLinks: { href: string; label: string }[] = [
+    { href: "/shop", label: "Shop" },
 ];
 
 function ThemeSwitcher() {
@@ -62,7 +63,7 @@ export function Header() {
   };
 
   return (
-    <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur-sm transition-colors duration-300">
+    <header className="sticky top-0 z-50 w-full border-b bg-glass-light dark:bg-glass-dark transition-colors duration-300">
       <div className="container flex h-20 items-center">
         <div className="mr-4 hidden items-center md:flex">
           <Link href="/" className="mr-6 flex items-center space-x-2">
@@ -74,7 +75,7 @@ export function Header() {
               <Link
                 key={link.href}
                 href={link.href}
-                className="transition-colors hover:text-primary"
+                className={cn("transition-colors hover:text-primary", pathname.startsWith(link.href) ? "text-primary" : "")}
               >
                 {link.label}
               </Link>
@@ -100,16 +101,16 @@ export function Header() {
                     <Link
                     key={link.href}
                     href={link.href}
-                    className="block px-2 py-1 text-lg"
+                    className={cn("block px-2 py-1 text-lg", pathname.startsWith(link.href) ? "text-primary" : "")}
                     >
                     {link.label}
                     </Link>
                 ))}
-                 <RadioGroup value={currentMode} onValueChange={handleModeChange} className="flex rounded-full bg-muted p-1 border">
-                    <RadioGroupItem value="retail" id="r1" className="sr-only" />
-                    <Label htmlFor="r1" className="flex-1 cursor-pointer rounded-full py-1.5 text-center text-sm data-[state=checked]:bg-primary data-[state=checked]:text-primary-foreground transition-colors">Retail</Label>
-                    <RadioGroupItem value="wholesale" id="r2" className="sr-only" />
-                    <Label htmlFor="r2" className="flex-1 cursor-pointer rounded-full py-1.5 text-center text-sm data-[state=checked]:bg-primary data-[state=checked]:text-primary-foreground transition-colors">Wholesale</Label>
+                 <RadioGroup value={currentMode} onValueChange={handleModeChange} className="grid grid-cols-2 gap-2 rounded-full border bg-muted p-1">
+                    <Label htmlFor="r1-mobile" className={cn("rounded-full py-1.5 text-center text-sm cursor-pointer", currentMode === 'retail' && 'bg-primary text-primary-foreground')}>Retail</Label>
+                    <Label htmlFor="r2-mobile" className={cn("rounded-full py-1.5 text-center text-sm cursor-pointer", currentMode === 'wholesale' && 'bg-primary text-primary-foreground')}>Wholesale</Label>
+                    <RadioGroupItem value="retail" id="r1-mobile" className="sr-only" />
+                    <RadioGroupItem value="wholesale" id="r2-mobile" className="sr-only" />
                 </RadioGroup>
               </nav>
             </SheetContent>
@@ -118,11 +119,11 @@ export function Header() {
         
         <div className="flex flex-1 items-center justify-start gap-4">
              {!isMobile && (
-                <RadioGroup value={currentMode} onValueChange={handleModeChange} className="flex rounded-full bg-muted p-1 border">
+                <RadioGroup value={currentMode} onValueChange={handleModeChange} className="grid grid-cols-2 gap-2 rounded-full border bg-muted p-1 w-52">
+                    <Label htmlFor="r1-desktop" className={cn("rounded-full py-1.5 text-center text-sm cursor-pointer transition-colors", currentMode === 'retail' && 'bg-primary text-primary-foreground')}>Retail</Label>
+                    <Label htmlFor="r2-desktop" className={cn("rounded-full py-1.5 text-center text-sm cursor-pointer transition-colors", currentMode === 'wholesale' && 'bg-primary text-primary-foreground')}>Wholesale</Label>
                     <RadioGroupItem value="retail" id="r1-desktop" className="sr-only" />
-                    <Label htmlFor="r1-desktop" className="cursor-pointer rounded-full px-4 py-1.5 text-sm data-[state=checked]:bg-primary data-[state=checked]:text-primary-foreground transition-colors">Retail</Label>
                     <RadioGroupItem value="wholesale" id="r2-desktop" className="sr-only" />
-                    <Label htmlFor="r2-desktop" className="cursor-pointer rounded-full px-4 py-1.5 text-sm data-[state=checked]:bg-primary data-[state=checked]:text-primary-foreground transition-colors">Wholesale</Label>
                 </RadioGroup>
              )}
              <form onSubmit={handleSearch} className="relative w-full max-w-sm ml-auto">
