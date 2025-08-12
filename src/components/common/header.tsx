@@ -231,10 +231,6 @@ function HeaderContent() {
               </SheetClose>
             </nav>
             <div className="mt-auto border-t pt-4">
-                <div className="flex items-center justify-between">
-                    <span className="text-sm text-muted-foreground">Toggle Theme</span>
-                    <ThemeSwitcher />
-                </div>
             </div>
           </div>
         </SheetContent>
@@ -246,6 +242,7 @@ function HeaderContent() {
       </Link>
 
       <div className="flex items-center justify-end">
+        <ThemeSwitcher />
         <div className="relative">
           <Link href={cartLink}>
             <Button variant="ghost" size="icon">
