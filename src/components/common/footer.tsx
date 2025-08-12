@@ -11,14 +11,15 @@ export async function Footer() {
     <footer className="bg-muted text-muted-foreground no-print">
       <div className="container mx-auto grid grid-cols-1 gap-8 px-4 py-12 md:grid-cols-4">
         <div className="flex flex-col space-y-4">
-            <Link href="/" className="flex items-center space-x-1">
+            <Link href="/" className="flex items-center space-x-2">
                 <Image
                     src="/images/logo.png"
                     alt="SK Traders Logo"
-                    width={50}
-                    height={50}
-                    className="h-12 w-auto"
+                    width={64}
+                    height={64}
+                    className="h-16 w-auto"
                 />
+                <span className="font-logo text-2xl font-bold">SK Traders</span>
             </Link>
             <p className="text-sm">
                 Your one-stop destination for wholesale and retail beverages. Quality products, unbeatable prices.
