@@ -9,15 +9,15 @@ import {
 } from "@/components/ui/sheet";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { Menu, ShoppingCart, Bot, Moon, Sun } from "lucide-react";
+import { Menu, ShoppingCart, Bot, Moon, Sun, Search } from "lucide-react";
 import { useCart } from "@/context/cart-context";
 import { useIsMobile } from "@/hooks/use-mobile";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Label } from "@/components/ui/label";
 import { useTheme } from "@/context/theme-provider";
+import { Input } from "../ui/input";
 
-const navLinks = [
-  { href: "/", label: "Home" },
+const navLinks: { href: string; label: string }[] = [
 ];
 
 function ThemeSwitcher() {
@@ -44,13 +44,20 @@ export function Header() {
 
   const handleModeChange = (value: string) => {
     if (value === 'retail') {
-      router.push('/shop');
+      router.push('/');
     } else if (value === 'wholesale') {
       router.push('/wholesale');
     }
   };
 
   const currentMode = pathname.startsWith('/wholesale') ? 'wholesale' : 'retail';
+
+  const handleSearch = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    const formData = new FormData(e.currentTarget);
+    const query = formData.get('search') as string;
+    router.push(`/shop?q=${encodeURIComponent(query)}`);
+  };
 
   return (
     <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur-sm transition-colors duration-300">
@@ -107,7 +114,7 @@ export function Header() {
           </Sheet>
         )}
         
-        <div className="flex flex-1 items-center justify-center md:justify-start">
+        <div className="flex flex-1 items-center justify-start gap-4">
              {!isMobile && (
                 <RadioGroup value={currentMode} onValueChange={handleModeChange} className="flex rounded-full bg-muted p-1 border">
                     <RadioGroupItem value="retail" id="r1-desktop" className="sr-only" />
@@ -116,6 +123,17 @@ export function Header() {
                     <Label htmlFor="r2-desktop" className="cursor-pointer rounded-full px-4 py-1.5 text-sm data-[state=checked]:bg-primary data-[state=checked]:text-primary-foreground transition-colors">Wholesale</Label>
                 </RadioGroup>
              )}
+             <form onSubmit={handleSearch} className="relative w-full max-w-sm ml-auto">
+                <Input
+                  name="search"
+                  className="pl-10"
+                  placeholder="Search products..."
+                />
+                <Button variant="ghost" size="icon" className="absolute left-1 top-1/2 -translate-y-1/2 h-8 w-8 text-muted-foreground">
+                  <Search className="h-4 w-4" />
+                  <span className="sr-only">Search</span>
+                </Button>
+            </form>
         </div>
          
         <div className="flex items-center justify-end space-x-2">

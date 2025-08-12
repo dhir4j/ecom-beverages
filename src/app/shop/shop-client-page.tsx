@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useSearchParams } from "next/navigation";
 import { Product } from "@/types/product";
 import { ProductCard } from "@/components/product/product-card";
@@ -95,9 +95,15 @@ interface ShopClientPageProps {
 export function ShopClientPage({ products, categories, brands }: ShopClientPageProps) {
   const searchParams = useSearchParams();
   const initialCategory = searchParams.get("category");
-  
+  const searchQuery = searchParams.get("q");
+
   const [selectedCategories, setSelectedCategories] = useState<string[]>(initialCategory ? [decodeURIComponent(initialCategory)] : []);
   const [selectedBrands, setSelectedBrands] = useState<string[]>([]);
+  const [searchTerm, setSearchTerm] = useState(searchQuery || "");
+
+  useEffect(() => {
+    setSearchTerm(searchQuery || "");
+  }, [searchQuery]);
 
   const filteredProducts = products.filter((product) => {
     const categoryMatch =
@@ -105,7 +111,11 @@ export function ShopClientPage({ products, categories, brands }: ShopClientPageP
       selectedCategories.includes(product.category);
     const brandMatch =
       selectedBrands.length === 0 || selectedBrands.includes(product.product_information["GENERAL INFORMATION"]?.Brand);
-    return categoryMatch && brandMatch;
+    const searchMatch =
+      searchTerm === "" ||
+      product.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      product.description.toLowerCase().includes(searchTerm.toLowerCase());
+    return categoryMatch && brandMatch && searchMatch;
   });
 
   const clearFilters = () => {
@@ -147,7 +157,7 @@ export function ShopClientPage({ products, categories, brands }: ShopClientPageP
             <div className="flex h-64 items-center justify-center rounded-lg border-2 border-dashed">
                 <div className="text-center">
                     <h3 className="text-xl font-semibold">No Products Found</h3>
-                    <p className="text-muted-foreground mt-2">Try adjusting your filters.</p>
+                    <p className="text-muted-foreground mt-2">Try adjusting your filters or search term.</p>
                 </div>
             </div>
           )}
