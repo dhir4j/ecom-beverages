@@ -1,6 +1,7 @@
-import { Bot, Mail, MapPin, Phone } from "lucide-react";
+import { Mail, MapPin, Phone } from "lucide-react";
 import Link from "next/link";
 import { getCategories } from "@/lib/products";
+import Image from "next/image";
 
 export async function Footer() {
   const categories = (await getCategories()).slice(0, 4);
@@ -10,8 +11,13 @@ export async function Footer() {
       <div className="container mx-auto grid grid-cols-1 gap-8 px-4 py-12 md:grid-cols-4">
         <div className="flex flex-col space-y-4">
             <Link href="/" className="flex items-center space-x-2">
-                <Bot className="h-8 w-8 text-primary" />
-                <span className="text-xl font-bold text-foreground">SK Traders</span>
+                <Image
+                    src="/images/logowtext.png"
+                    alt="SK Traders Logo"
+                    width={150}
+                    height={40}
+                    className="h-10 w-auto"
+                />
             </Link>
             <p className="text-sm">
                 Your one-stop destination for wholesale and retail beverages. Quality products, unbeatable prices.

@@ -20,6 +20,7 @@ import { Input } from "../ui/input";
 import { useRouter } from "next/navigation";
 import { cn } from "@/lib/utils";
 import { useEffect, useState, Suspense } from "react";
+import Image from "next/image";
 
 function ThemeSwitcher() {
     const { theme, setTheme } = useTheme();
@@ -76,9 +77,14 @@ function HeaderContent() {
   const desktopHeader = (
     <div className="hidden md:grid grid-cols-3 items-center w-full">
         <div className="flex items-center gap-4">
-            <Link href="/" className="flex items-center space-x-2">
-                <Bot className="h-6 w-6 text-primary" />
-                <span className="font-bold">SK Traders</span>
+            <Link href="/">
+                <Image
+                    src="/images/logowtext.png"
+                    alt="SK Traders Logo"
+                    width={150}
+                    height={40}
+                    className="h-10 w-auto"
+                />
             </Link>
             <RadioGroup value={currentMode} onValueChange={handleModeChange} className="grid grid-cols-2 gap-2 rounded-full border bg-muted p-1 w-52">
                 <div>
@@ -135,9 +141,14 @@ function HeaderContent() {
         </SheetTrigger>
         <SheetContent side="left" className="w-[300px] sm:w-[400px] bg-glass-dark">
             <nav className="flex flex-col gap-4">
-            <Link href="/" className="mb-4 flex items-center space-x-2">
-                <Bot className="h-6 w-6 text-primary" />
-                <span className="font-bold">SK Traders</span>
+            <Link href="/" className="mb-4">
+                <Image
+                    src="/images/logowtext.png"
+                    alt="SK Traders Logo"
+                    width={150}
+                    height={40}
+                    className="h-10 w-auto"
+                />
             </Link>
              <Link
                 href={currentMode === 'wholesale' ? '/wholesale' : '/shop'}
