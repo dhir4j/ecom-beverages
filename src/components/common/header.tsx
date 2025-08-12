@@ -19,7 +19,7 @@ import { useTheme } from "@/context/theme-provider";
 import { Input } from "../ui/input";
 import { useRouter } from "next/navigation";
 import { cn } from "@/lib/utils";
-import { useEffect, useState } from "react";
+import { useEffect, useState, Suspense } from "react";
 
 function ThemeSwitcher() {
     const { theme, setTheme } = useTheme();
@@ -37,7 +37,7 @@ function ThemeSwitcher() {
     )
 }
 
-export function Header() {
+function HeaderContent() {
   const router = useRouter();
   const pathname = usePathname();
   const searchParams = useSearchParams();
@@ -195,4 +195,12 @@ export function Header() {
       </div>
     </header>
   );
+}
+
+export function Header() {
+    return (
+        <Suspense fallback={<div className="h-24" />}>
+            <HeaderContent />
+        </Suspense>
+    )
 }

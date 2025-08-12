@@ -7,13 +7,9 @@ import type { Product } from "@/types/product";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { usePathname, useSearchParams } from "next/navigation";
+import { Suspense } from "react";
 
-interface ProductCardProps {
-  product: Product;
-  isWholesale?: boolean;
-}
-
-export function ProductCard({ product, isWholesale: isWholesaleProp }: ProductCardProps) {
+function ProductCardContent({ product, isWholesale: isWholesaleProp }: { product: Product, isWholesale?: boolean }) {
   const pathname = usePathname();
   const searchParams = useSearchParams();
   
@@ -55,4 +51,12 @@ export function ProductCard({ product, isWholesale: isWholesaleProp }: ProductCa
        </Link>
     </Card>
   );
+}
+
+export function ProductCard({ product, isWholesale }: { product: Product, isWholesale?: boolean }) {
+    return (
+        <Suspense fallback={<Card className="h-full w-full"></Card>}>
+            <ProductCardContent product={product} isWholesale={isWholesale} />
+        </Suspense>
+    )
 }

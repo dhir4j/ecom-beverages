@@ -1,7 +1,7 @@
 
 "use client";
 
-import { useState } from "react";
+import { useState, Suspense } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import Image from "next/image";
 import { useCart } from "@/context/cart-context";
@@ -12,7 +12,8 @@ import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle }
 import { useToast } from "@/hooks/use-toast";
 import { QrCode, ClipboardCheck } from "lucide-react";
 
-export function QrCodePayment() {
+
+function QrCodePaymentContent() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const mode = searchParams.get('mode') === 'wholesale' ? 'wholesale' : 'retail';
@@ -82,4 +83,12 @@ export function QrCodePayment() {
       </CardFooter>
     </Card>
   );
+}
+
+export function QrCodePayment() {
+    return (
+        <Suspense fallback={<div>Loading payment options...</div>}>
+            <QrCodePaymentContent />
+        </Suspense>
+    )
 }

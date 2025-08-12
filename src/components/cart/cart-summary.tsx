@@ -7,14 +7,14 @@ import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/componen
 import { Separator } from "@/components/ui/separator";
 import { Input } from "@/components/ui/input";
 import Link from "next/link";
-import { useState, useMemo } from "react";
+import { useState, useMemo, Suspense } from "react";
 import { useToast } from "@/hooks/use-toast";
 import { Alert, AlertDescription } from "@/components/ui/alert";
 import { CheckCircle2, Info, XCircle } from "lucide-react";
 import { serviceablePincodes } from "@/lib/pincodes";
 import { useSearchParams } from "next/navigation";
 
-export function CartSummary() {
+function CartSummaryContent() {
   const searchParams = useSearchParams();
   const mode = searchParams.get('mode') === 'wholesale' ? 'wholesale' : 'retail';
   
@@ -147,4 +147,13 @@ export function CartSummary() {
       </CardFooter>
     </Card>
   );
+}
+
+
+export function CartSummary() {
+    return (
+        <Suspense fallback={<div>Loading summary...</div>}>
+            <CartSummaryContent />
+        </Suspense>
+    )
 }

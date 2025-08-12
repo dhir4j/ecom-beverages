@@ -9,12 +9,9 @@ import { Button } from "@/components/ui/button";
 import { QuantitySelector } from "../common/quantity-selector";
 import { X } from "lucide-react";
 import { usePathname, useSearchParams } from "next/navigation";
+import { Suspense } from "react";
 
-interface CartItemProps {
-  item: CartItemType;
-}
-
-export function CartItem({ item }: CartItemProps) {
+function CartItemContent({ item }: { item: CartItemType }) {
   const pathname = usePathname();
   const searchParams = useSearchParams();
   
@@ -59,4 +56,12 @@ export function CartItem({ item }: CartItemProps) {
       </Button>
     </div>
   );
+}
+
+export function CartItem({ item }: { item: CartItemType }) {
+    return (
+        <Suspense fallback={<div>Loading item...</div>}>
+            <CartItemContent item={item} />
+        </Suspense>
+    )
 }

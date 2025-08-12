@@ -6,6 +6,7 @@ import { Breadcrumb, BreadcrumbItem, BreadcrumbLink, BreadcrumbList, BreadcrumbP
 import Link from 'next/link';
 import { ProductDetailsClient } from './product-details-client';
 import type { Product } from '@/types/product';
+import { Suspense } from 'react';
 
 type ProductPageProps = {
   params: {
@@ -16,7 +17,7 @@ type ProductPageProps = {
   }
 };
 
-export default async function ProductPage({ params, searchParams }: ProductPageProps) {
+async function ProductPageContent({ params, searchParams }: ProductPageProps) {
   const product = await getProductById(params.id);
 
   if (!product) {
@@ -65,4 +66,12 @@ export default async function ProductPage({ params, searchParams }: ProductPageP
       />
     </div>
   );
+}
+
+export default function ProductPage(props: ProductPageProps) {
+  return (
+    <Suspense fallback={<div>Loading product...</div>}>
+      <ProductPageContent {...props} />
+    </Suspense>
+  )
 }
