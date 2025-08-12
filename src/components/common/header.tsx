@@ -65,7 +65,7 @@ export function Header() {
 
   return (
     <header className="sticky top-0 z-50 w-full border-b bg-glass-light dark:bg-glass-dark transition-colors duration-300">
-      <div className="container flex h-20 items-center">
+      <div className="container flex h-24 items-center">
         <div className="mr-4 hidden items-center md:flex">
           <Link href="/" className="mr-6 flex items-center space-x-2">
             <Bot className="h-6 w-6 text-primary" />
@@ -108,10 +108,14 @@ export function Header() {
                     </Link>
                 ))}
                  <RadioGroup value={currentMode} onValueChange={handleModeChange} className="grid grid-cols-2 gap-2 rounded-full border bg-muted p-1">
-                    <Label htmlFor="r1-mobile" className={cn("rounded-full py-1.5 text-center text-sm font-medium cursor-pointer", currentMode === 'retail' && 'bg-primary text-primary-foreground')}>Retail</Label>
-                    <Label htmlFor="r2-mobile" className={cn("rounded-full py-1.5 text-center text-sm font-medium cursor-pointer", currentMode === 'wholesale' && 'bg-primary text-primary-foreground')}>Wholesale</Label>
-                    <RadioGroupItem value="retail" id="r1-mobile" className="sr-only" />
-                    <RadioGroupItem value="wholesale" id="r2-mobile" className="sr-only" />
+                    <div>
+                        <RadioGroupItem value="retail" id="r1-mobile" className="sr-only" />
+                        <Label htmlFor="r1-mobile" className={cn("block w-full rounded-full py-1.5 text-center text-sm font-medium cursor-pointer", currentMode === 'retail' && 'bg-primary text-primary-foreground')}>Retail</Label>
+                    </div>
+                    <div>
+                        <RadioGroupItem value="wholesale" id="r2-mobile" className="sr-only" />
+                        <Label htmlFor="r2-mobile" className={cn("block w-full rounded-full py-1.5 text-center text-sm font-medium cursor-pointer", currentMode === 'wholesale' && 'bg-primary text-primary-foreground')}>Wholesale</Label>
+                    </div>
                 </RadioGroup>
               </nav>
             </SheetContent>
@@ -121,10 +125,14 @@ export function Header() {
         <div className="flex flex-1 items-center justify-start gap-4">
              {!isMobile && (
                 <RadioGroup value={currentMode} onValueChange={handleModeChange} className="grid grid-cols-2 gap-2 rounded-full border bg-muted p-1 w-52">
-                    <Label htmlFor="r1-desktop" className={cn("rounded-full py-1.5 text-center text-sm font-medium cursor-pointer transition-colors", currentMode === 'retail' && 'bg-primary text-primary-foreground')}>Retail</Label>
-                    <Label htmlFor="r2-desktop" className={cn("rounded-full py-1.5 text-center text-sm font-medium cursor-pointer transition-colors", currentMode === 'wholesale' && 'bg-primary text-primary-foreground')}>Wholesale</Label>
-                    <RadioGroupItem value="retail" id="r1-desktop" className="sr-only" />
-                    <RadioGroupItem value="wholesale" id="r2-desktop" className="sr-only" />
+                    <div>
+                        <RadioGroupItem value="retail" id="r1-desktop" className="sr-only" />
+                        <Label htmlFor="r1-desktop" className={cn("block w-full rounded-full py-1.5 text-center text-sm font-medium cursor-pointer transition-colors", currentMode === 'retail' && 'bg-primary text-primary-foreground')}>Retail</Label>
+                    </div>
+                    <div>
+                        <RadioGroupItem value="wholesale" id="r2-desktop" className="sr-only" />
+                        <Label htmlFor="r2-desktop" className={cn("block w-full rounded-full py-1.5 text-center text-sm font-medium cursor-pointer transition-colors", currentMode === 'wholesale' && 'bg-primary text-primary-foreground')}>Wholesale</Label>
+                    </div>
                 </RadioGroup>
              )}
              <form onSubmit={handleSearch} className="relative w-full max-w-sm ml-auto">
