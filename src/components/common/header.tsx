@@ -63,91 +63,37 @@ export function Header() {
     router.push(`/shop?q=${encodeURIComponent(query)}`);
   };
 
-  return (
-    <header className="sticky top-0 z-50 w-full border-b bg-glass-light dark:bg-glass-dark transition-colors duration-300">
-      <div className="container flex h-24 items-center">
-        <div className="mr-4 hidden items-center md:flex">
-          <Link href="/" className="mr-6 flex items-center space-x-2">
-            <Bot className="h-6 w-6 text-primary" />
-            <span className="font-bold">SK Traders</span>
-          </Link>
-          <nav className="flex items-center space-x-6 text-sm font-medium">
-            {navLinks.map((link) => (
-              <Link
-                key={link.href}
-                href={link.href}
-                className={cn("transition-colors hover:text-primary", pathname.startsWith(link.href) ? "text-primary" : "")}
-              >
-                {link.label}
-              </Link>
-            ))}
-          </nav>
+  const desktopHeader = (
+    <div className="hidden md:grid grid-cols-3 items-center w-full">
+        <div className="flex items-center gap-4">
+            <Link href="/" className="flex items-center space-x-2">
+                <Bot className="h-6 w-6 text-primary" />
+                <span className="font-bold">SK Traders</span>
+            </Link>
+            <RadioGroup value={currentMode} onValueChange={handleModeChange} className="grid grid-cols-2 gap-2 rounded-full border bg-muted p-1 w-52">
+                <div>
+                    <RadioGroupItem value="retail" id="r1-desktop" className="sr-only" />
+                    <Label htmlFor="r1-desktop" className={cn("block w-full rounded-full py-1.5 text-center text-sm font-medium cursor-pointer transition-colors", currentMode === 'retail' && 'bg-primary text-primary-foreground')}>Retail</Label>
+                </div>
+                <div>
+                    <RadioGroupItem value="wholesale" id="r2-desktop" className="sr-only" />
+                    <Label htmlFor="r2-desktop" className={cn("block w-full rounded-full py-1.5 text-center text-sm font-medium cursor-pointer transition-colors", currentMode === 'wholesale' && 'bg-primary text-primary-foreground')}>Wholesale</Label>
+                </div>
+            </RadioGroup>
         </div>
-
-        {isMobile && (
-           <Sheet>
-            <SheetTrigger asChild>
-              <Button variant="outline" size="icon" className="md:hidden">
-                <Menu className="h-5 w-5" />
-                <span className="sr-only">Toggle Menu</span>
-              </Button>
-            </SheetTrigger>
-            <SheetContent side="left" className="w-[300px] sm:w-[400px] bg-glass-dark">
-              <nav className="flex flex-col gap-4">
-                <Link href="/" className="mb-4 flex items-center space-x-2">
-                    <Bot className="h-6 w-6 text-primary" />
-                    <span className="font-bold">SK Traders</span>
-                </Link>
-                {navLinks.map((link) => (
-                    <Link
-                    key={link.href}
-                    href={link.href}
-                    className={cn("block px-2 py-1 text-lg", pathname.startsWith(link.href) ? "text-primary" : "")}
-                    >
-                    {link.label}
-                    </Link>
-                ))}
-                 <RadioGroup value={currentMode} onValueChange={handleModeChange} className="grid grid-cols-2 gap-2 rounded-full border bg-muted p-1">
-                    <div>
-                        <RadioGroupItem value="retail" id="r1-mobile" className="sr-only" />
-                        <Label htmlFor="r1-mobile" className={cn("block w-full rounded-full py-1.5 text-center text-sm font-medium cursor-pointer", currentMode === 'retail' && 'bg-primary text-primary-foreground')}>Retail</Label>
-                    </div>
-                    <div>
-                        <RadioGroupItem value="wholesale" id="r2-mobile" className="sr-only" />
-                        <Label htmlFor="r2-mobile" className={cn("block w-full rounded-full py-1.5 text-center text-sm font-medium cursor-pointer", currentMode === 'wholesale' && 'bg-primary text-primary-foreground')}>Wholesale</Label>
-                    </div>
-                </RadioGroup>
-              </nav>
-            </SheetContent>
-          </Sheet>
-        )}
-        
-        <div className="flex flex-1 items-center justify-start gap-4">
-             {!isMobile && (
-                <RadioGroup value={currentMode} onValueChange={handleModeChange} className="grid grid-cols-2 gap-2 rounded-full border bg-muted p-1 w-52">
-                    <div>
-                        <RadioGroupItem value="retail" id="r1-desktop" className="sr-only" />
-                        <Label htmlFor="r1-desktop" className={cn("block w-full rounded-full py-1.5 text-center text-sm font-medium cursor-pointer transition-colors", currentMode === 'retail' && 'bg-primary text-primary-foreground')}>Retail</Label>
-                    </div>
-                    <div>
-                        <RadioGroupItem value="wholesale" id="r2-desktop" className="sr-only" />
-                        <Label htmlFor="r2-desktop" className={cn("block w-full rounded-full py-1.5 text-center text-sm font-medium cursor-pointer transition-colors", currentMode === 'wholesale' && 'bg-primary text-primary-foreground')}>Wholesale</Label>
-                    </div>
-                </RadioGroup>
-             )}
-             <form onSubmit={handleSearch} className="relative w-full max-w-sm ml-auto">
+        <div className="flex justify-center">
+             <form onSubmit={handleSearch} className="relative w-full max-w-sm">
                 <Input
                   name="search"
                   className="pl-10"
                   placeholder="Search products..."
                 />
-                <Button variant="ghost" size="icon" className="absolute left-1 top-1/2 -translate-y-1/2 h-8 w-8 text-muted-foreground">
+                <Button variant="ghost" size="icon" className="absolute left-1 top-1/2 -translate-y-1/2 h-8 w-8 text-muted-foreground" type="submit">
                   <Search className="h-4 w-4" />
                   <span className="sr-only">Search</span>
                 </Button>
             </form>
         </div>
-         
         <div className="flex items-center justify-end space-x-2">
             <ThemeSwitcher />
             <Link href="/cart">
@@ -160,6 +106,78 @@ export function Header() {
               </Button>
             </Link>
         </div>
+    </div>
+  );
+
+  const mobileHeader = (
+    <>
+        <Sheet>
+        <SheetTrigger asChild>
+            <Button variant="outline" size="icon" className="md:hidden">
+            <Menu className="h-5 w-5" />
+            <span className="sr-only">Toggle Menu</span>
+            </Button>
+        </SheetTrigger>
+        <SheetContent side="left" className="w-[300px] sm:w-[400px] bg-glass-dark">
+            <nav className="flex flex-col gap-4">
+            <Link href="/" className="mb-4 flex items-center space-x-2">
+                <Bot className="h-6 w-6 text-primary" />
+                <span className="font-bold">SK Traders</span>
+            </Link>
+            {navLinks.map((link) => (
+                <Link
+                key={link.href}
+                href={link.href}
+                className={cn("block px-2 py-1 text-lg", pathname.startsWith(link.href) ? "text-primary" : "")}
+                >
+                {link.label}
+                </Link>
+            ))}
+                <RadioGroup value={currentMode} onValueChange={handleModeChange} className="grid grid-cols-2 gap-2 rounded-full border bg-muted p-1">
+                <div>
+                    <RadioGroupItem value="retail" id="r1-mobile" className="sr-only" />
+                    <Label htmlFor="r1-mobile" className={cn("block w-full rounded-full py-1.5 text-center text-sm font-medium cursor-pointer", currentMode === 'retail' && 'bg-primary text-primary-foreground')}>Retail</Label>
+                </div>
+                <div>
+                    <RadioGroupItem value="wholesale" id="r2-mobile" className="sr-only" />
+                    <Label htmlFor="r2-mobile" className={cn("block w-full rounded-full py-1.5 text-center text-sm font-medium cursor-pointer", currentMode === 'wholesale' && 'bg-primary text-primary-foreground')}>Wholesale</Label>
+                </div>
+            </RadioGroup>
+            </nav>
+        </SheetContent>
+        </Sheet>
+        <div className="flex-1">
+             <form onSubmit={handleSearch} className="relative w-full max-w-sm mx-auto">
+                <Input
+                    name="search"
+                    className="pl-10"
+                    placeholder="Search products..."
+                />
+                <Button variant="ghost" size="icon" className="absolute left-1 top-1/2 -translate-y-1/2 h-8 w-8 text-muted-foreground" type="submit">
+                    <Search className="h-4 w-4" />
+                    <span className="sr-only">Search</span>
+                </Button>
+            </form>
+        </div>
+        <div className="flex items-center justify-end space-x-2">
+            <ThemeSwitcher />
+            <Link href="/cart">
+                <Button variant="ghost" size="icon">
+                <ShoppingCart className="h-5 w-5" />
+                {itemCount > 0 && (
+                    <Badge className="absolute top-1 right-1 h-5 w-5 justify-center p-0">{itemCount}</Badge>
+                )}
+                <span className="sr-only">Shopping Cart</span>
+                </Button>
+            </Link>
+        </div>
+    </>
+  );
+
+  return (
+    <header className="sticky top-0 z-50 w-full border-b bg-glass-light dark:bg-glass-dark transition-colors duration-300">
+      <div className="container flex h-24 items-center">
+        {isMobile ? mobileHeader : desktopHeader}
       </div>
     </header>
   );
