@@ -21,7 +21,7 @@ function ProductCardContent({ product, isWholesale: isWholesaleProp }: { product
     <Card className="flex h-full flex-col overflow-hidden transition-shadow duration-300 hover:shadow-lg group">
        <Link href={productUrl} className="flex flex-col h-full">
         <CardHeader className="p-0">
-            <div className="aspect-square relative w-full overflow-hidden">
+            <div className="aspect-[4/3] sm:aspect-square relative w-full overflow-hidden">
                 <Image
                     src={product.image_url}
                     alt={product.name}
