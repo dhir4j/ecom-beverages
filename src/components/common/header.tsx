@@ -17,6 +17,7 @@ import { Label } from "@/components/ui/label";
 import { useTheme } from "@/context/theme-provider";
 import { Input } from "../ui/input";
 import { useRouter } from "next/navigation";
+import { cn } from "@/lib/utils";
 
 const navLinks: { href: string; label: string }[] = [
 ];
@@ -62,7 +63,7 @@ export function Header() {
 
   return (
     <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur-sm transition-colors duration-300">
-      <div className="container flex h-16 items-center">
+      <div className="container flex h-20 items-center">
         <div className="mr-4 hidden items-center md:flex">
           <Link href="/" className="mr-6 flex items-center space-x-2">
             <Bot className="h-6 w-6 text-primary" />
@@ -104,11 +105,11 @@ export function Header() {
                     {link.label}
                     </Link>
                 ))}
-                 <RadioGroup value={currentMode} onValueChange={handleModeChange} className="flex rounded-full bg-background p-1 border border-border">
+                 <RadioGroup value={currentMode} onValueChange={handleModeChange} className="flex rounded-full bg-muted p-1 border">
                     <RadioGroupItem value="retail" id="r1" className="sr-only" />
-                    <Label htmlFor="r1" className="flex-1 cursor-pointer rounded-full py-1.5 text-center text-sm data-[state=checked]:bg-primary data-[state=checked]:text-primary-foreground">Retail</Label>
+                    <Label htmlFor="r1" className="flex-1 cursor-pointer rounded-full py-1.5 text-center text-sm data-[state=checked]:bg-primary data-[state=checked]:text-primary-foreground transition-colors">Retail</Label>
                     <RadioGroupItem value="wholesale" id="r2" className="sr-only" />
-                    <Label htmlFor="r2" className="flex-1 cursor-pointer rounded-full py-1.5 text-center text-sm data-[state=checked]:bg-primary data-[state=checked]:text-primary-foreground">Wholesale</Label>
+                    <Label htmlFor="r2" className="flex-1 cursor-pointer rounded-full py-1.5 text-center text-sm data-[state=checked]:bg-primary data-[state=checked]:text-primary-foreground transition-colors">Wholesale</Label>
                 </RadioGroup>
               </nav>
             </SheetContent>
