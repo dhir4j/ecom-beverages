@@ -1,3 +1,4 @@
+
 import { getProducts } from "@/lib/products";
 import { ProductCard } from "@/components/product/product-card";
 import Link from "next/link";
@@ -40,7 +41,7 @@ async function TopPicksForCategory({ category }: { category: string }) {
         >
           <CarouselContent className="-ml-2">
             {products.map((product) => (
-              <CarouselItem key={product.id} className="basis-1/2 pl-2 sm:basis-1/3">
+              <CarouselItem key={product.id} className="basis-2/5 pl-2 sm:basis-1/3">
                 <ProductCard product={product} />
               </CarouselItem>
             ))}
