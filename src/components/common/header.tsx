@@ -79,13 +79,12 @@ function HeaderContent() {
         <div className="flex items-center gap-4">
             <Link href="/" className="flex items-center space-x-1">
                 <Image
-                    src="/images/bottlelogo.png"
+                    src="/images/logo.png"
                     alt="SK Traders Logo"
                     width={50}
                     height={50}
                     className="h-12 w-auto"
                 />
-                <span className="font-logo text-2xl font-bold text-primary">SK Traders</span>
             </Link>
             <RadioGroup value={currentMode} onValueChange={handleModeChange} className="grid grid-cols-2 gap-2 rounded-full border bg-muted p-1 w-52">
                 <div>
@@ -144,13 +143,12 @@ function HeaderContent() {
             <nav className="flex flex-col gap-4">
             <Link href="/" className="mb-4 flex items-center space-x-1">
                 <Image
-                    src="/images/bottlelogo.png"
+                    src="/images/logo.png"
                     alt="SK Traders Logo"
                     width={40}
                     height={40}
                     className="h-10 w-auto"
                 />
-                 <span className="font-logo text-xl font-bold text-primary">SK Traders</span>
             </Link>
              <Link
                 href={currentMode === 'wholesale' ? '/wholesale' : '/shop'}

@@ -13,13 +13,12 @@ export async function Footer() {
         <div className="flex flex-col space-y-4">
             <Link href="/" className="flex items-center space-x-1">
                 <Image
-                    src="/images/bottlelogo.png"
+                    src="/images/logo.png"
                     alt="SK Traders Logo"
                     width={50}
                     height={50}
                     className="h-12 w-auto"
                 />
-                <span className="font-logo text-2xl font-bold text-primary">SK Traders</span>
             </Link>
             <p className="text-sm">
                 Your one-stop destination for wholesale and retail beverages. Quality products, unbeatable prices.
