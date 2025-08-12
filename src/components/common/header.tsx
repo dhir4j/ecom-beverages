@@ -8,10 +8,12 @@ import {
   SheetContent,
   SheetTitle,
   SheetTrigger,
+  SheetHeader,
+  SheetClose
 } from "@/components/ui/sheet";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { Menu, ShoppingCart, Bot, Moon, Sun, Search, Briefcase, LayoutGrid } from "lucide-react";
+import { Menu, ShoppingCart, Bot, Moon, Sun, Search, Briefcase, LayoutGrid, Home, Info, Phone } from "lucide-react";
 import { useCart } from "@/context/cart-context";
 import { useIsMobile } from "@/hooks/use-mobile";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
@@ -22,6 +24,7 @@ import { useRouter } from "next/navigation";
 import { cn } from "@/lib/utils";
 import { useEffect, useState, Suspense, useCallback } from "react";
 import Image from "next/image";
+import { Separator } from "../ui/separator";
 
 function useDebounce(value: string, delay: number) {
     const [debouncedValue, setDebouncedValue] = useState(value);
@@ -61,7 +64,6 @@ function HeaderContent() {
   const pathname = usePathname();
   const searchParams = useSearchParams();
   const [currentMode, setCurrentMode] = useState<'retail' | 'wholesale'>('retail');
-  const [showSearch, setShowSearch] = useState(false);
   const [searchValue, setSearchValue] = useState(searchParams.get('q') || '');
   const debouncedSearchValue = useDebounce(searchValue, 300);
 
@@ -109,15 +111,8 @@ function HeaderContent() {
     e.preventDefault();
     const searchPath = currentMode === 'wholesale' ? '/wholesale' : '/shop';
     router.push(searchPath + '?' + createQueryString('q', searchValue));
-    if(isMobile) setShowSearch(false);
   };
   
-  const handleSearchIconClick = () => {
-    if (isMobile) {
-      setShowSearch(!showSearch);
-    }
-  }
-
   const CartIcon = currentMode === 'wholesale' ? Briefcase : ShoppingCart;
   const cartLink = currentMode === 'wholesale' ? '/cart?mode=wholesale' : '/cart';
   const allItemsLink = currentMode === 'wholesale' ? '/wholesale' : '/shop';
@@ -188,76 +183,86 @@ function HeaderContent() {
   );
 
   const mobileHeader = (
-    <div className="flex items-center justify-between w-full">
-        <div className="flex justify-start">
-            <Button asChild variant="outline" size="icon">
-                <Link href={allItemsLink}>
-                    <LayoutGrid className="h-5 w-5" />
-                    <span className="sr-only">All Items</span>
-                </Link>
-            </Button>
-        </div>
-        
-        <Link href="/" className="flex items-center space-x-1">
-            <Image
-                src="/images/logo.png"
-                alt="SK Traders Logo"
-                width={50}
-                height={50}
-                className="h-12 w-auto"
-            />
-            <span className="font-logo text-2xl font-bold whitespace-nowrap">SK Traders</span>
-        </Link>
-        
-        <div className="flex justify-end items-center">
-            <Button variant="ghost" size="icon" onClick={handleSearchIconClick}>
-                <Search className="h-5 w-5" />
+    <div className="flex w-full items-center justify-between">
+      <Sheet>
+        <SheetTrigger asChild>
+          <Button variant="ghost" size="icon">
+            <Menu className="h-6 w-6" />
+            <span className="sr-only">Open menu</span>
+          </Button>
+        </SheetTrigger>
+        <SheetContent side="left" className="w-full max-w-sm">
+          <SheetHeader className="mb-6 border-b pb-4">
+            <SheetTitle className="text-left">Menu</SheetTitle>
+          </SheetHeader>
+          <div className="flex h-full flex-col">
+            <form onSubmit={handleSearchSubmit} className="relative mb-6">
+              <Input
+                name="search"
+                className="pl-10"
+                placeholder="Search products..."
+                autoFocus
+                value={searchValue}
+                onChange={(e) => setSearchValue(e.target.value)}
+                onClick={() => {
+                  const searchPath = currentMode === 'wholesale' ? '/wholesale' : '/shop';
+                  if (pathname !== searchPath) {
+                    router.push(searchPath);
+                  }
+                }}
+              />
+              <Button variant="ghost" size="icon" className="absolute left-1 top-1/2 h-8 w-8 -translate-y-1/2 text-muted-foreground" type="submit">
+                <Search className="h-4 w-4" />
                 <span className="sr-only">Search</span>
+              </Button>
+            </form>
+            <nav className="flex flex-col gap-4 text-lg">
+              <SheetClose asChild>
+                  <Link href="/" className="flex items-center gap-3 rounded-md p-2 hover:bg-muted"><Home className="h-5 w-5" />Home</Link>
+              </SheetClose>
+              <SheetClose asChild>
+                <Link href={allItemsLink} className="flex items-center gap-3 rounded-md p-2 hover:bg-muted"><LayoutGrid className="h-5 w-5" />All Items</Link>
+              </SheetClose>
+              <SheetClose asChild>
+                <Link href="/about" className="flex items-center gap-3 rounded-md p-2 hover:bg-muted"><Info className="h-5 w-5" />About Us</Link>
+              </SheetClose>
+              <SheetClose asChild>
+                <Link href="/customer-care" className="flex items-center gap-3 rounded-md p-2 hover:bg-muted"><Phone className="h-5 w-5" />Customer Care</Link>
+              </SheetClose>
+            </nav>
+            <Separator className="my-auto" />
+            <div className="flex items-center justify-between">
+                <span>Toggle Theme</span>
+                <ThemeSwitcher />
+            </div>
+          </div>
+        </SheetContent>
+      </Sheet>
+
+      <Link href="/" className="flex items-center space-x-1">
+        <Image src="/images/logo.png" alt="SK Traders Logo" width={50} height={50} className="h-12 w-auto" />
+        <span className="font-logo text-2xl font-bold whitespace-nowrap">SK Traders</span>
+      </Link>
+
+      <div className="flex items-center justify-end">
+        <div className="relative">
+          <Link href={cartLink}>
+            <Button variant="ghost" size="icon">
+              <CartIcon className="h-5 w-5" />
+              <span className="sr-only">Shopping Cart</span>
             </Button>
-            <ThemeSwitcher />
-            <div className="relative">
-                <Link href={cartLink}>
-                    <Button variant="ghost" size="icon">
-                    <CartIcon className="h-5 w-5" />
-                    <span className="sr-only">Shopping Cart</span>
-                    </Button>
-                    {itemCount > 0 && (
-                        <Badge className="absolute -top-1 -right-1 h-5 w-5 justify-center p-0">{itemCount}</Badge>
-                    )}
-                </Link>
-            </div>
+            {itemCount > 0 && (
+              <Badge className="absolute -right-1 -top-1 h-5 w-5 justify-center p-0">{itemCount}</Badge>
+            )}
+          </Link>
         </div>
-        
-        {showSearch && (
-            <div className="absolute top-full left-0 w-full bg-background p-4 border-b">
-                <form onSubmit={handleSearchSubmit} className="relative w-full max-w-sm mx-auto">
-                    <Input
-                        name="search"
-                        className="pl-10"
-                        placeholder="Search products..."
-                        autoFocus
-                        value={searchValue}
-                        onChange={(e) => setSearchValue(e.target.value)}
-                        onClick={() => {
-                            const searchPath = currentMode === 'wholesale' ? '/wholesale' : '/shop';
-                            if (pathname !== searchPath) {
-                              router.push(searchPath);
-                            }
-                          }}
-                    />
-                    <Button variant="ghost" size="icon" className="absolute left-1 top-1/2 -translate-y-1/2 h-8 w-8 text-muted-foreground" type="submit">
-                        <Search className="h-4 w-4" />
-                        <span className="sr-only">Search</span>
-                    </Button>
-                </form>
-            </div>
-        )}
+      </div>
     </div>
   );
 
   return (
     <header className="sticky top-0 z-50 w-full border-b bg-primary/20 backdrop-blur-md transition-colors duration-300">
-      <div className="container flex h-24 items-center">
+      <div className="container flex h-20 items-center">
         {isMobile ? mobileHeader : desktopNav}
       </div>
       <div className="xl:hidden bg-background/80 backdrop-blur-md border-b">
