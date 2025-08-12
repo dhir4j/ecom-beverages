@@ -121,9 +121,9 @@ function HeaderContent() {
   const CartIcon = currentMode === 'wholesale' ? Briefcase : ShoppingCart;
   const cartLink = currentMode === 'wholesale' ? '/cart?mode=wholesale' : '/cart';
 
-  const desktopHeader = (
-    <div className="hidden lg:grid grid-cols-12 items-center w-full gap-x-4">
-        <div className="col-span-5 flex items-center gap-4">
+  const desktopNav = (
+    <div className="flex items-center w-full">
+        <div className="flex items-center gap-4 flex-1">
             <Link href="/" className="flex items-center space-x-2 flex-shrink-0">
                 <Image
                     src="/images/logo.png"
@@ -134,7 +134,7 @@ function HeaderContent() {
                 />
                 <span className="font-logo text-3xl font-bold whitespace-nowrap">SK Traders</span>
             </Link>
-            <RadioGroup value={currentMode} onValueChange={handleModeChange} className="grid grid-cols-2 gap-2 rounded-full border bg-muted p-1 w-52">
+            <RadioGroup value={currentMode} onValueChange={handleModeChange} className="hidden xl:grid grid-cols-2 gap-2 rounded-full border bg-muted p-1 w-52">
                 <div>
                     <RadioGroupItem value="retail" id="r1-desktop" className="sr-only" />
                     <Label htmlFor="r1-desktop" className={cn("block w-full rounded-full py-1.5 text-center text-sm font-medium cursor-pointer transition-colors", currentMode === 'retail' ? 'bg-primary text-primary-foreground' : 'hover:bg-accent')}>Retail</Label>
@@ -145,7 +145,7 @@ function HeaderContent() {
                 </div>
             </RadioGroup>
         </div>
-        <div className="col-span-4 flex justify-center">
+        <div className="hidden lg:flex justify-center flex-1">
              <form onSubmit={handleSearchSubmit} className="relative w-full max-w-sm">
                 <Input
                   name="search"
@@ -166,7 +166,7 @@ function HeaderContent() {
                 </Button>
             </form>
         </div>
-        <div className="col-span-3 flex items-center justify-end space-x-2">
+        <div className="flex items-center justify-end space-x-2 flex-1">
             <Button asChild variant="outline" size="sm">
                 <Link href={currentMode === 'wholesale' ? '/wholesale' : '/shop'}>All Items</Link>
              </Button>
@@ -277,9 +277,9 @@ function HeaderContent() {
   return (
     <header className="sticky top-0 z-50 w-full border-b bg-primary/20 backdrop-blur-md transition-colors duration-300">
       <div className="container flex h-24 items-center">
-        {isMobile ? mobileHeader : desktopHeader}
+        {isMobile ? mobileHeader : desktopNav}
       </div>
-      <div className="lg:hidden bg-background/80 backdrop-blur-md border-b">
+      <div className="xl:hidden bg-background/80 backdrop-blur-md border-b">
         <div className="container p-2">
           <RadioGroup value={currentMode} onValueChange={handleModeChange} className="grid grid-cols-2 gap-2 rounded-full border bg-muted p-1">
             <div>
@@ -304,3 +304,5 @@ export function Header() {
         </Suspense>
     )
 }
+
+    
