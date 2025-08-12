@@ -1,19 +1,21 @@
+
 "use client";
 
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow, TableFooter } from "@/components/ui/table";
 import { Bot, Download } from "lucide-react";
+import { useSearchParams } from "next/navigation";
 
 // Mock data for the invoice as cart would be cleared
-const mockInvoiceData = {
+const mockRetailInvoiceData = {
   invoiceNumber: `INV-${new Date().getFullYear()}-${Math.floor(1000 + Math.random() * 9000)}`,
   invoiceDate: new Date().toLocaleDateString(),
   dueDate: new Date(Date.now() + 15 * 24 * 60 * 60 * 1000).toLocaleDateString(),
   items: [
-    { name: "Coca-Cola Classic (500ml Bottle)", quantity: 10, price: 2.50 },
-    { name: "Tropicana Orange Juice (1L Carton)", quantity: 5, price: 5.00 },
-    { name: "Red Bull Energy Drink (250ml Can)", quantity: 24, price: 3.00 },
+    { name: "Coca-Cola Classic (500ml Bottle)", quantity: 10, price: 45.00 },
+    { name: "Tropicana Orange Juice (1L Carton)", quantity: 5, price: 130.00 },
+    { name: "Red Bull Energy Drink (250ml Can)", quantity: 24, price: 125.00 },
   ],
   customer: {
     name: "Retail Customer",
@@ -26,7 +28,32 @@ const mockInvoiceData = {
   }
 };
 
+const mockWholesaleInvoiceData = {
+    invoiceNumber: `INV-W-${new Date().getFullYear()}-${Math.floor(1000 + Math.random() * 9000)}`,
+    invoiceDate: new Date().toLocaleDateString(),
+    dueDate: new Date(Date.now() + 30 * 24 * 60 * 60 * 1000).toLocaleDateString(),
+    items: [
+      { name: "Coca-Cola Classic (500ml Bottle)", quantity: 100, price: 40.00 },
+      { name: "Tropicana Orange Juice (1L Carton)", quantity: 100, price: 104.00 },
+      { name: "Red Bull Energy Drink (250ml Can)", quantity: 100, price: 110.00 },
+    ],
+    customer: {
+      name: "Wholesale Customer",
+      address: "PAN India Order",
+    },
+    payment: {
+      method: "UPI / QR Code",
+      status: "Paid",
+      utr: `UTR-W-${Math.floor(100000000000 + Math.random() * 900000000000)}`,
+    }
+  };
+
+
 export function InvoiceDetails() {
+  const searchParams = useSearchParams();
+  const mode = searchParams.get('mode') === 'wholesale' ? 'wholesale' : 'retail';
+  const mockInvoiceData = mode === 'wholesale' ? mockWholesaleInvoiceData : mockRetailInvoiceData;
+
   const subtotal = mockInvoiceData.items.reduce((acc, item) => acc + item.price * item.quantity, 0);
   const gst = subtotal * 0.18;
   const total = subtotal + gst;

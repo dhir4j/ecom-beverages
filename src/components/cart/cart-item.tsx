@@ -8,16 +8,24 @@ import type { CartItem as CartItemType } from "@/types";
 import { Button } from "@/components/ui/button";
 import { QuantitySelector } from "../common/quantity-selector";
 import { X } from "lucide-react";
-import { usePathname } from "next/navigation";
+import { usePathname, useSearchParams } from "next/navigation";
 
 interface CartItemProps {
   item: CartItemType;
 }
 
 export function CartItem({ item }: CartItemProps) {
-  const { updateQuantity, removeFromCart } = useCart();
   const pathname = usePathname();
-  const isWholesale = pathname.startsWith('/wholesale');
+  const searchParams = useSearchParams();
+  
+  const isWholesalePath = pathname.startsWith('/wholesale');
+  const isWholesaleQuery = searchParams.get('mode') === 'wholesale';
+  const isWholesale = isWholesalePath || isWholesaleQuery;
+  
+  const mode = isWholesale ? 'wholesale' : 'retail';
+  const { updateQuantity, removeFromCart } = useCart(mode);
+  
+  const productUrl = isWholesale ? `/p/${item.productId}?mode=wholesale` : `/p/${item.productId}`;
 
   return (
     <div className="flex items-center gap-4 py-4">
@@ -31,7 +39,7 @@ export function CartItem({ item }: CartItemProps) {
         />
       </div>
       <div className="flex-grow">
-        <Link href={`/p/${item.productId}`}>
+        <Link href={productUrl}>
           <h3 className="font-semibold hover:text-primary">{item.name}</h3>
         </Link>
         <p className="text-sm text-muted-foreground">{item.variantName}</p>

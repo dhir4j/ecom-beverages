@@ -42,9 +42,9 @@ const Description = ({ text }: { text: string }) => {
 };
 
 export function ProductDetailsClient({ product, similarProducts, isWholesale }: ProductDetailsClientProps) {
-    const { addToCart } = useCart();
+    const mode = isWholesale ? 'wholesale' : 'retail';
+    const { addToCart } = useCart(mode);
     const router = useRouter();
-    const { toast } = useToast();
     
     const discountedPrice = parseFloat(product.discounted_price.replace('₹', ''));
     const originalPrice = parseFloat(product.original_price.replace('₹', ''));
@@ -63,7 +63,8 @@ export function ProductDetailsClient({ product, similarProducts, isWholesale }: 
 
     const handleBuyNow = () => {
         handleAddToCart();
-        router.push('/cart');
+        const cartUrl = isWholesale ? '/cart?mode=wholesale' : '/cart';
+        router.push(cartUrl);
     };
 
     const generalInfo = product.product_information['GENERAL INFORMATION'];

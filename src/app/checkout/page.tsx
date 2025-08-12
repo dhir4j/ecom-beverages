@@ -6,10 +6,18 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
 import { QrCodePayment } from "@/components/checkout/qr-code-payment";
 import Image from "next/image";
+import { useSearchParams } from "next/navigation";
+import { Suspense } from "react";
 
-export default function CheckoutPage() {
-  const { cartItems, totalPrice } = useCart();
-  const shipping = totalPrice >= 500 ? 0 : 100;
+function CheckoutPageContent() {
+  const searchParams = useSearchParams();
+  const mode = searchParams.get('mode') === 'wholesale' ? 'wholesale' : 'retail';
+  const { cartItems, totalPrice } = useCart(mode);
+  
+  const isWholesale = mode === 'wholesale';
+  const shipping = isWholesale 
+    ? (totalPrice >= 5000 ? 0 : 750)
+    : (totalPrice >= 500 ? 0 : 100);
   const total = totalPrice + shipping;
 
   return (
@@ -68,4 +76,13 @@ export default function CheckoutPage() {
       </div>
     </div>
   );
+}
+
+
+export default function CheckoutPage() {
+    return (
+        <Suspense fallback={<div>Loading...</div>}>
+            <CheckoutPageContent />
+        </Suspense>
+    )
 }

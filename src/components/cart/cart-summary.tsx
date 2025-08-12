@@ -12,24 +12,21 @@ import { useToast } from "@/hooks/use-toast";
 import { Alert, AlertDescription } from "@/components/ui/alert";
 import { CheckCircle2, Info, XCircle } from "lucide-react";
 import { serviceablePincodes } from "@/lib/pincodes";
-import { usePathname } from "next/navigation";
+import { useSearchParams } from "next/navigation";
 
 export function CartSummary() {
-  const { totalPrice, itemCount } = useCart();
+  const searchParams = useSearchParams();
+  const mode = searchParams.get('mode') === 'wholesale' ? 'wholesale' : 'retail';
+  
+  const { totalPrice, itemCount } = useCart(mode);
   const { toast } = useToast();
   
   const [pincode, setPincode] = useState("");
   const [isPincodeServiceable, setIsPincodeServiceable] = useState<boolean | null>(null);
   const [showAddressForm, setShowAddressForm] = useState(false);
   const [discountCode, setDiscountCode] = useState("");
-  const pathname = usePathname();
 
-  const isWholesale = useMemo(() => {
-    // A simple heuristic: if any item in the cart has a quantity of 100 or more,
-    // we assume it's a wholesale order. This is not foolproof but works for this case.
-    return totalPrice > 5000;
-  }, [totalPrice]);
-
+  const isWholesale = mode === 'wholesale';
 
   const handleCheckPincode = () => {
     const isServiceable = serviceablePincodes.includes(pincode);
@@ -54,6 +51,7 @@ export function CartSummary() {
   const total = subtotal + shipping;
 
   const canCheckout = isWholesale ? true : isPincodeServiceable;
+  const checkoutLink = isWholesale ? '/checkout?mode=wholesale' : '/checkout';
 
   return (
     <Card className="sticky top-20">
@@ -144,7 +142,7 @@ export function CartSummary() {
       </CardContent>
       <CardFooter>
         <Button asChild size="lg" className="w-full" disabled={!canCheckout}>
-          <Link href="/checkout">Proceed to Checkout</Link>
+          <Link href={checkoutLink}>Proceed to Checkout</Link>
         </Button>
       </CardFooter>
     </Card>

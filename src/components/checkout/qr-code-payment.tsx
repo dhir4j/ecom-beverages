@@ -1,7 +1,8 @@
+
 "use client";
 
 import { useState } from "react";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import Image from "next/image";
 import { useCart } from "@/context/cart-context";
 import { Button } from "@/components/ui/button";
@@ -13,7 +14,9 @@ import { QrCode, ClipboardCheck } from "lucide-react";
 
 export function QrCodePayment() {
   const router = useRouter();
-  const { clearCart } = useCart();
+  const searchParams = useSearchParams();
+  const mode = searchParams.get('mode') === 'wholesale' ? 'wholesale' : 'retail';
+  const { clearCart } = useCart(mode);
   const { toast } = useToast();
   const [utr, setUtr] = useState("");
   
@@ -27,7 +30,8 @@ export function QrCodePayment() {
         description: "Your payment is being verified. You will be redirected to the invoice page.",
       });
       clearCart();
-      router.push("/invoice");
+      const invoicePath = mode === 'wholesale' ? "/invoice?mode=wholesale" : "/invoice";
+      router.push(invoicePath);
     } else {
       toast({
         title: "Invalid UTR ID",

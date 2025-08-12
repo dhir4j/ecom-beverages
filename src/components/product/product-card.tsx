@@ -17,7 +17,8 @@ export function ProductCard({ product, isWholesale: isWholesaleProp }: ProductCa
   const pathname = usePathname();
   const searchParams = useSearchParams();
   
-  const isWholesale = isWholesaleProp ?? pathname.startsWith('/wholesale') ?? searchParams.get('mode') === 'wholesale';
+  const isWholesaleMode = searchParams.get('mode') === 'wholesale';
+  const isWholesale = isWholesaleProp ?? pathname.startsWith('/wholesale') ?? isWholesaleMode;
   const productUrl = isWholesale ? `/p/${product.id}?mode=wholesale` : `/p/${product.id}`;
 
   return (

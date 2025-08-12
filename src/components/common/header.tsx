@@ -10,7 +10,7 @@ import {
 } from "@/components/ui/sheet";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { Menu, ShoppingCart, Bot, Moon, Sun, Search } from "lucide-react";
+import { Menu, ShoppingCart, Bot, Moon, Sun, Search, Briefcase } from "lucide-react";
 import { useCart } from "@/context/cart-context";
 import { useIsMobile } from "@/hooks/use-mobile";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
@@ -37,11 +37,17 @@ function ThemeSwitcher() {
 }
 
 export function Header() {
-  const { itemCount } = useCart();
-  const isMobile = useIsMobile();
   const router = useRouter();
   const pathname = usePathname();
   const searchParams = useSearchParams();
+
+  const isWholesalePath = pathname.startsWith('/wholesale');
+  const isWholesaleQuery = searchParams.get('mode') === 'wholesale';
+  const currentMode = isWholesalePath || isWholesaleQuery ? 'wholesale' : 'retail';
+
+  const { itemCount } = useCart(currentMode);
+  const isMobile = useIsMobile();
+
 
   const handleModeChange = (value: string) => {
     if (value === 'retail') {
@@ -51,16 +57,16 @@ export function Header() {
     }
   };
 
-  const isWholesalePath = pathname.startsWith('/wholesale');
-  const isWholesaleQuery = searchParams.get('mode') === 'wholesale';
-  const currentMode = isWholesalePath || isWholesaleQuery ? 'wholesale' : 'retail';
-
   const handleSearch = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const formData = new FormData(e.currentTarget);
     const query = formData.get('search') as string;
-    router.push(`/shop?q=${encodeURIComponent(query)}`);
+    const searchPath = currentMode === 'wholesale' ? '/wholesale' : '/shop';
+    router.push(`${searchPath}?q=${encodeURIComponent(query)}`);
   };
+
+  const CartIcon = currentMode === 'wholesale' ? Briefcase : ShoppingCart;
+  const cartLink = currentMode === 'wholesale' ? '/cart?mode=wholesale' : '/cart';
 
   const desktopHeader = (
     <div className="hidden md:grid grid-cols-3 items-center w-full">
@@ -95,13 +101,13 @@ export function Header() {
         </div>
         <div className="flex items-center justify-end space-x-2">
             <Button asChild variant="outline" size="sm">
-                <Link href="/shop">All Items</Link>
+                <Link href={currentMode === 'wholesale' ? '/wholesale' : '/shop'}>All Items</Link>
              </Button>
             <ThemeSwitcher />
             <div className="relative">
-              <Link href="/cart">
+              <Link href={cartLink}>
                 <Button variant="ghost" size="icon">
-                  <ShoppingCart className="h-5 w-5" />
+                  <CartIcon className="h-5 w-5" />
                   <span className="sr-only">Shopping Cart</span>
                 </Button>
                  {itemCount > 0 && (
@@ -129,8 +135,8 @@ export function Header() {
                 <span className="font-bold">SK Traders</span>
             </Link>
              <Link
-                href="/shop"
-                className={cn("block px-2 py-1 text-lg", pathname.startsWith("/shop") ? "text-primary" : "")}
+                href={currentMode === 'wholesale' ? '/wholesale' : '/shop'}
+                className={cn("block px-2 py-1 text-lg", pathname.startsWith("/shop") || pathname.startsWith("/wholesale") ? "text-primary" : "")}
                 >
                 All Items
              </Link>
@@ -163,9 +169,9 @@ export function Header() {
         <div className="flex items-center justify-end space-x-2">
             <ThemeSwitcher />
             <div className="relative">
-                <Link href="/cart">
+                <Link href={cartLink}>
                     <Button variant="ghost" size="icon">
-                    <ShoppingCart className="h-5 w-5" />
+                    <CartIcon className="h-5 w-5" />
                     <span className="sr-only">Shopping Cart</span>
                     </Button>
                     {itemCount > 0 && (
