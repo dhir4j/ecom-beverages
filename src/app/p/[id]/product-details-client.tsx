@@ -46,15 +46,17 @@ export function ProductDetailsClient({ product, similarProducts, isWholesale }: 
     const router = useRouter();
     const { toast } = useToast();
     
+    const discountedPrice = parseFloat(product.discounted_price.replace('₹', ''));
+    const originalPrice = parseFloat(product.original_price.replace('₹', ''));
+
     const handleAddToCart = () => {
-        const price = parseFloat(product.discounted_price.replace('₹', ''));
         addToCart({
             productId: product.id,
             variantId: product.id,
             name: product.name,
             variantName: product.size || 'Standard',
             image: product.image_url,
-            price: isWholesale ? price : parseFloat(product.original_price.replace('₹', '')),
+            price: isWholesale ? discountedPrice : originalPrice,
             quantity: isWholesale ? 100 : 1,
         });
     };
@@ -65,6 +67,9 @@ export function ProductDetailsClient({ product, similarProducts, isWholesale }: 
     };
 
     const generalInfo = product.product_information['GENERAL INFORMATION'];
+
+    const priceFor100 = discountedPrice * 100;
+    const savings = (originalPrice * 100) - priceFor100;
 
   return (
     <>
@@ -102,6 +107,18 @@ export function ProductDetailsClient({ product, similarProducts, isWholesale }: 
                 </div>
                 {isWholesale && product.discount_percentage && (
                     <Badge variant="destructive" className="mt-2 text-base">{product.discount_percentage}</Badge>
+                )}
+                {isWholesale && (
+                  <div className="mt-4 space-y-2 text-sm">
+                      <div className="flex justify-between">
+                          <span className="text-muted-foreground">Price for 100 units:</span>
+                          <span className="font-semibold">₹{priceFor100.toFixed(2)}</span>
+                      </div>
+                      <div className="flex justify-between text-green-600">
+                          <span className="text-muted-foreground">Your Savings:</span>
+                          <span className="font-semibold">₹{savings.toFixed(2)}</span>
+                      </div>
+                  </div>
                 )}
             </div>
 

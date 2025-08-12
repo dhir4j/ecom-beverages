@@ -178,8 +178,8 @@ export function Header() {
   );
 
   return (
-    <header className="sticky top-0 z-50 w-full border-b bg-secondary/20 backdrop-blur-md transition-colors duration-300">
-      <div className="container flex h-24 items-center">
+    <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur-sm transition-colors duration-300">
+      <div className="container flex h-16 items-center">
         {isMobile ? mobileHeader : desktopHeader}
       </div>
     </header>
