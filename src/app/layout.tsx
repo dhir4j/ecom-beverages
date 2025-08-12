@@ -7,6 +7,7 @@ import { Footer } from '@/components/common/footer';
 import { Toaster } from '@/components/ui/toaster';
 import { CartProvider } from '@/context/cart-context';
 import { ThemeProvider } from '@/context/theme-provider';
+import { Suspense } from 'react';
 
 const inter = Inter({ subsets: ['latin'], variable: '--font-inter' });
 const poppins = Poppins({ 
@@ -40,7 +41,9 @@ export default function RootLayout({
             disableTransitionOnChange
         >
             <CartProvider>
-                <Header />
+                <Suspense fallback={<div>Loading...</div>}>
+                    <Header />
+                </Suspense>
                 <main className="flex-grow">{children}</main>
                 <Footer />
                 <Toaster />
