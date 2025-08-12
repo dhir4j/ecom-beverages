@@ -6,6 +6,7 @@ import { usePathname, useSearchParams } from "next/navigation";
 import {
   Sheet,
   SheetContent,
+  SheetTitle,
   SheetTrigger,
 } from "@/components/ui/sheet";
 import { Button } from "@/components/ui/button";
@@ -143,6 +144,7 @@ function HeaderContent() {
             </Button>
         </SheetTrigger>
         <SheetContent side="left" className="w-[300px] sm:w-[400px] bg-glass-dark">
+            <SheetTitle className="sr-only">Menu</SheetTitle>
             <nav className="flex flex-col gap-4">
             <Link href="/" className="mb-4 flex items-center space-x-2">
                 <Image
