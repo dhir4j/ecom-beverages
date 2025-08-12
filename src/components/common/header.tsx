@@ -77,7 +77,7 @@ function HeaderContent() {
   const desktopHeader = (
     <div className="hidden md:grid grid-cols-3 items-center w-full">
         <div className="flex items-center gap-4">
-            <Link href="/" className="flex items-center space-x-2">
+            <Link href="/" className="flex items-center space-x-1">
                 <Image
                     src="/images/bottlelogo.png"
                     alt="SK Traders Logo"
@@ -142,7 +142,7 @@ function HeaderContent() {
         </SheetTrigger>
         <SheetContent side="left" className="w-[300px] sm:w-[400px] bg-glass-dark">
             <nav className="flex flex-col gap-4">
-            <Link href="/" className="mb-4 flex items-center space-x-2">
+            <Link href="/" className="mb-4 flex items-center space-x-1">
                 <Image
                     src="/images/bottlelogo.png"
                     alt="SK Traders Logo"

@@ -11,7 +11,7 @@ export async function Footer() {
     <footer className="bg-muted text-muted-foreground no-print">
       <div className="container mx-auto grid grid-cols-1 gap-8 px-4 py-12 md:grid-cols-4">
         <div className="flex flex-col space-y-4">
-            <Link href="/" className="flex items-center space-x-2">
+            <Link href="/" className="flex items-center space-x-1">
                 <Image
                     src="/images/bottlelogo.png"
                     alt="SK Traders Logo"
