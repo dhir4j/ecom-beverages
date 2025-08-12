@@ -81,11 +81,11 @@ function HeaderContent() {
                 <Image
                     src="/images/logo.png"
                     alt="SK Traders Logo"
-                    width={64}
-                    height={64}
-                    className="h-16 w-auto"
+                    width={70}
+                    height={70}
+                    className="h-[4.4rem] w-auto"
                 />
-                <span className="font-logo text-2xl font-bold">SK Traders</span>
+                <span className="font-logo text-3xl font-bold">SK Traders</span>
             </Link>
             <RadioGroup value={currentMode} onValueChange={handleModeChange} className="grid grid-cols-2 gap-2 rounded-full border bg-muted p-1 w-52">
                 <div>
@@ -146,11 +146,11 @@ function HeaderContent() {
                 <Image
                     src="/images/logo.png"
                     alt="SK Traders Logo"
-                    width={52}
-                    height={52}
-                    className="h-14 w-auto"
+                    width={58}
+                    height={58}
+                    className="h-[3.6rem] w-auto"
                 />
-                <span className="font-logo text-xl font-bold">SK Traders</span>
+                <span className="font-logo text-2xl font-bold">SK Traders</span>
             </Link>
              <Link
                 href={currentMode === 'wholesale' ? '/wholesale' : '/shop'}

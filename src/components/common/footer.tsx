@@ -15,11 +15,11 @@ export async function Footer() {
                 <Image
                     src="/images/logo.png"
                     alt="SK Traders Logo"
-                    width={64}
-                    height={64}
-                    className="h-16 w-auto"
+                    width={70}
+                    height={70}
+                    className="h-[4.4rem] w-auto"
                 />
-                <span className="font-logo text-2xl font-bold">SK Traders</span>
+                <span className="font-logo text-3xl font-bold">SK Traders</span>
             </Link>
             <p className="text-sm">
                 Your one-stop destination for wholesale and retail beverages. Quality products, unbeatable prices.
