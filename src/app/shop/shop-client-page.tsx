@@ -128,7 +128,6 @@ export function ShopClientPage({ products, categories, brands, isWholesale }: Sh
   const searchParams = useSearchParams();
   const initialCategory = searchParams.get("category");
   const searchQuery = searchParams.get("q");
-  const isMobile = useIsMobile();
 
   const [selectedCategories, setSelectedCategories] = useState<string[]>(initialCategory ? [decodeURIComponent(initialCategory)] : []);
   const [selectedBrands, setSelectedBrands] = useState<string[]>([]);
@@ -168,31 +167,8 @@ export function ShopClientPage({ products, categories, brands, isWholesale }: Sh
         );
     }
     
-    if (isMobile) {
-        return (
-            <Carousel opts={{ align: 'start', loop: filteredProducts.length > 2 }} className="w-full">
-                <CarouselContent className="-ml-2">
-                    {filteredProducts.map(product => (
-                        <CarouselItem key={product.id} className="basis-2/5 pl-2">
-                             <ProductCard
-                                product={product}
-                                isWholesale={isWholesale}
-                            />
-                        </CarouselItem>
-                    ))}
-                </CarouselContent>
-                {filteredProducts.length > 2 && (
-                    <>
-                        <CarouselPrevious className="ml-12" />
-                        <CarouselNext className="mr-12" />
-                    </>
-                )}
-            </Carousel>
-        )
-    }
-
     return (
-        <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
+        <div className="grid grid-cols-2 gap-4 sm:grid-cols-2 lg:grid-cols-3">
             {filteredProducts.map((product) => (
             <ProductCard
                 key={product.id}

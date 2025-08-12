@@ -32,23 +32,11 @@ async function TopPicksForCategory({ category }: { category: string }) {
         </Button>
       </div>
       <div className="md:hidden">
-        <Carousel
-          opts={{
-            align: "start",
-            loop: true,
-          }}
-          className="w-full"
-        >
-          <CarouselContent className="-ml-2">
-            {products.map((product) => (
-              <CarouselItem key={product.id} className="basis-2/5 pl-2">
-                <ProductCard product={product} />
-              </CarouselItem>
+        <div className="grid grid-cols-2 gap-4">
+            {products.slice(0, 4).map((product) => (
+              <ProductCard key={product.id} product={product} />
             ))}
-          </CarouselContent>
-          <CarouselPrevious className="ml-12" />
-          <CarouselNext className="mr-12" />
-        </Carousel>
+        </div>
       </div>
       <div className="hidden md:grid md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-6">
         {products.map((product) => (
