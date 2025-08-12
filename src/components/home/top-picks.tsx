@@ -2,12 +2,19 @@ import { getProducts } from "@/lib/products";
 import { ProductCard } from "@/components/product/product-card";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
+import {
+  Carousel,
+  CarouselContent,
+  CarouselItem,
+  CarouselNext,
+  CarouselPrevious,
+} from "@/components/ui/carousel";
 
 async function TopPicksForCategory({ category }: { category: string }) {
   const allProducts = await getProducts();
   const products = allProducts
     .filter((p) => p.category.toLowerCase() === category.toLowerCase())
-    .slice(0, 5);
+    .slice(0, 8);
 
   if (products.length === 0) {
     return null;
@@ -20,10 +27,31 @@ async function TopPicksForCategory({ category }: { category: string }) {
           Top Picks For {category}
         </h3>
         <Button asChild variant="link">
-            <Link href={`/c/${encodeURIComponent(category)}`}>View All</Link>
+          <Link href={`/c/${encodeURIComponent(category)}`}>View All</Link>
         </Button>
       </div>
-      <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5">
+      <div className="md:hidden">
+        <Carousel
+          opts={{
+            align: "start",
+            loop: true,
+          }}
+          className="w-full"
+        >
+          <CarouselContent>
+            {products.map((product) => (
+              <CarouselItem key={product.id} className="basis-2/3 sm:basis-1/2">
+                <div className="p-1">
+                  <ProductCard product={product} />
+                </div>
+              </CarouselItem>
+            ))}
+          </CarouselContent>
+          <CarouselPrevious className="ml-12" />
+          <CarouselNext className="mr-12" />
+        </Carousel>
+      </div>
+      <div className="hidden md:grid md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-6">
         {products.map((product) => (
           <ProductCard key={product.id} product={product} />
         ))}
@@ -33,7 +61,13 @@ async function TopPicksForCategory({ category }: { category: string }) {
 }
 
 export async function TopPicks() {
-  const categories = ["Cold Drinks", "Nutritional Drinks", "Juices", "Energy Drinks", "Packaged Water"];
+  const categories = [
+    "Cold Drinks",
+    "Nutritional Drinks",
+    "Juices",
+    "Energy Drinks",
+    "Packaged Water",
+  ];
 
   return (
     <section className="py-16 sm:py-24">

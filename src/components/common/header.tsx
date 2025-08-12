@@ -43,6 +43,7 @@ function HeaderContent() {
   const pathname = usePathname();
   const searchParams = useSearchParams();
   const [currentMode, setCurrentMode] = useState<'retail' | 'wholesale'>('retail');
+  const [showSearch, setShowSearch] = useState(false);
 
   useEffect(() => {
     const isWholesalePath = pathname.startsWith('/wholesale');
@@ -69,6 +70,7 @@ function HeaderContent() {
     const query = formData.get('search') as string;
     const searchPath = currentMode === 'wholesale' ? '/wholesale' : '/shop';
     router.push(`${searchPath}?q=${encodeURIComponent(query)}`);
+    setShowSearch(false);
   };
 
   const CartIcon = currentMode === 'wholesale' ? Briefcase : ShoppingCart;
@@ -171,20 +173,23 @@ function HeaderContent() {
             </nav>
         </SheetContent>
         </Sheet>
-        <div className="flex-1">
-             <form onSubmit={handleSearch} className="relative w-full max-w-sm mx-auto">
-                <Input
-                    name="search"
-                    className="pl-10"
-                    placeholder="Search products..."
+        <div className="flex-1 flex items-center justify-center">
+            <Link href="/" className="flex items-center space-x-2">
+                <Image
+                    src="/images/logo.png"
+                    alt="SK Traders Logo"
+                    width={50}
+                    height={50}
+                    className="h-12 w-auto"
                 />
-                <Button variant="ghost" size="icon" className="absolute left-1 top-1/2 -translate-y-1/2 h-8 w-8 text-muted-foreground" type="submit">
-                    <Search className="h-4 w-4" />
-                    <span className="sr-only">Search</span>
-                </Button>
-            </form>
+                <span className="font-logo text-2xl font-bold">SK Traders</span>
+            </Link>
         </div>
-        <div className="flex items-center justify-end space-x-2">
+        <div className="flex items-center justify-end space-x-1">
+            <Button variant="ghost" size="icon" onClick={() => setShowSearch(!showSearch)}>
+                <Search className="h-5 w-5" />
+                <span className="sr-only">Search</span>
+            </Button>
             <ThemeSwitcher />
             <div className="relative">
                 <Link href={cartLink}>
@@ -198,6 +203,22 @@ function HeaderContent() {
                 </Link>
             </div>
         </div>
+         {showSearch && (
+            <div className="absolute top-full left-0 w-full bg-background p-4 border-b">
+                <form onSubmit={handleSearch} className="relative w-full max-w-sm mx-auto">
+                    <Input
+                        name="search"
+                        className="pl-10"
+                        placeholder="Search products..."
+                        autoFocus
+                    />
+                    <Button variant="ghost" size="icon" className="absolute left-1 top-1/2 -translate-y-1/2 h-8 w-8 text-muted-foreground" type="submit">
+                        <Search className="h-4 w-4" />
+                        <span className="sr-only">Search</span>
+                    </Button>
+                </form>
+            </div>
+        )}
     </>
   );
 

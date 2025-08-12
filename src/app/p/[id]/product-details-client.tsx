@@ -170,25 +170,48 @@ export function ProductDetailsClient({ product, similarProducts, isWholesale }: 
        </div>
        <div className="mt-16">
             <h2 className="text-2xl font-bold mb-4 text-center">You Might Also Like</h2>
-            <Carousel
-                opts={{
-                    align: "start",
-                    loop: true,
-                }}
-                className="w-full"
-            >
-                <CarouselContent>
-                    {similarProducts.map((p) => (
-                        <CarouselItem key={p.id} className="md:basis-1/2 lg:basis-1/4">
-                             <div className="p-1">
-                                <ProductCard product={p} isWholesale={isWholesale} />
-                             </div>
-                        </CarouselItem>
-                    ))}
-                </CarouselContent>
-                <CarouselPrevious className="ml-12" />
-                <CarouselNext className="mr-12" />
-            </Carousel>
+            <div className="md:hidden">
+                <Carousel
+                    opts={{
+                        align: "start",
+                        loop: true,
+                    }}
+                    className="w-full"
+                >
+                    <CarouselContent>
+                        {similarProducts.map((p) => (
+                            <CarouselItem key={p.id} className="basis-2/3 sm:basis-1/2">
+                                <div className="p-1">
+                                    <ProductCard product={p} isWholesale={isWholesale} />
+                                </div>
+                            </CarouselItem>
+                        ))}
+                    </CarouselContent>
+                    <CarouselPrevious className="ml-12" />
+                    <CarouselNext className="mr-12" />
+                </Carousel>
+            </div>
+            <div className="hidden md:block">
+                <Carousel
+                    opts={{
+                        align: "start",
+                        loop: true,
+                    }}
+                    className="w-full"
+                >
+                    <CarouselContent>
+                        {similarProducts.map((p) => (
+                            <CarouselItem key={p.id} className="md:basis-1/2 lg:basis-1/4">
+                                <div className="p-1">
+                                    <ProductCard product={p} isWholesale={isWholesale} />
+                                </div>
+                            </CarouselItem>
+                        ))}
+                    </CarouselContent>
+                    <CarouselPrevious className="ml-12" />
+                    <CarouselNext className="mr-12" />
+                </Carousel>
+            </div>
        </div>
     </>
   );
