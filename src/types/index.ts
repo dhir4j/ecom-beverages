@@ -2,17 +2,17 @@ export type Product = {
   id: string;
   name: string;
   description: string;
-  images: string[];
+  image_url: string;
   category: string;
-  brand: string;
-  isFeatured: boolean;
-  variants: {
-    id: string;
-    name: string; // e.g., '250ml Can', '1L Bottle'
-    priceRetail: number;
-    priceWholesale: number;
-    stock: number;
-  }[];
+  product_information: {
+      [section: string]: {
+          [key: string]: string;
+      };
+  };
+  discounted_price: string;
+  original_price: string;
+  discount_percentage: string;
+  size: string;
 };
 
 export type Testimonial = {

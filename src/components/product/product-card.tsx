@@ -12,8 +12,8 @@ interface ProductCardProps {
 
 export function ProductCard({ product }: ProductCardProps) {
   return (
-    <Card className="flex h-full flex-col overflow-hidden transition-shadow duration-300 hover:shadow-lg">
-       <Link href={`/p/${product.id}`} className="block">
+    <Card className="flex h-full flex-col overflow-hidden transition-shadow duration-300 hover:shadow-lg group">
+       <Link href={`/p/${product.id}`} className="flex flex-col h-full">
         <CardHeader className="p-0">
             <div className="aspect-square relative w-full overflow-hidden">
                 <Image
@@ -26,7 +26,7 @@ export function ProductCard({ product }: ProductCardProps) {
             </div>
         </CardHeader>
         <CardContent className="p-4 flex-grow">
-            <CardTitle className="mb-2 text-lg h-12 overflow-hidden">{product.name}</CardTitle>
+            <CardTitle className="mb-2 text-lg h-12 overflow-hidden leading-tight group-hover:text-primary">{product.name}</CardTitle>
             <CardDescription>{product.size}</CardDescription>
         </CardContent>
         <CardFooter className="p-4 pt-0 flex-col items-start">
