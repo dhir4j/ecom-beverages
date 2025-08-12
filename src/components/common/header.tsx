@@ -20,8 +20,25 @@ import { useTheme } from "@/context/theme-provider";
 import { Input } from "../ui/input";
 import { useRouter } from "next/navigation";
 import { cn } from "@/lib/utils";
-import { useEffect, useState, Suspense } from "react";
+import { useEffect, useState, Suspense, useCallback } from "react";
 import Image from "next/image";
+
+function useDebounce(value: string, delay: number) {
+    const [debouncedValue, setDebouncedValue] = useState(value);
+
+    useEffect(() => {
+        const handler = setTimeout(() => {
+            setDebouncedValue(value);
+        }, delay);
+
+        return () => {
+            clearTimeout(handler);
+        };
+    }, [value, delay]);
+
+    return debouncedValue;
+}
+
 
 function ThemeSwitcher() {
     const { theme, setTheme } = useTheme();
@@ -45,13 +62,15 @@ function HeaderContent() {
   const searchParams = useSearchParams();
   const [currentMode, setCurrentMode] = useState<'retail' | 'wholesale'>('retail');
   const [showSearch, setShowSearch] = useState(false);
+  const [searchValue, setSearchValue] = useState(searchParams.get('q') || '');
+  const debouncedSearchValue = useDebounce(searchValue, 300);
+
 
   useEffect(() => {
     const isWholesalePath = pathname.startsWith('/wholesale');
     const isWholesaleQuery = searchParams.get('mode') === 'wholesale';
     setCurrentMode(isWholesalePath || isWholesaleQuery ? 'wholesale' : 'retail');
   }, [pathname, searchParams]);
-  
 
   const { itemCount } = useCart(currentMode);
   const isMobile = useIsMobile();
@@ -64,15 +83,40 @@ function HeaderContent() {
       router.push('/wholesale');
     }
   };
+  
+  const createQueryString = useCallback(
+    (name: string, value: string) => {
+      const params = new URLSearchParams(searchParams.toString())
+      if (value) {
+        params.set(name, value)
+      } else {
+        params.delete(name)
+      }
+ 
+      return params.toString()
+    },
+    [searchParams]
+  )
 
-  const handleSearch = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    const formData = new FormData(e.currentTarget);
-    const query = formData.get('search') as string;
+  useEffect(() => {
     const searchPath = currentMode === 'wholesale' ? '/wholesale' : '/shop';
-    router.push(`${searchPath}?q=${encodeURIComponent(query)}`);
-    setShowSearch(false);
+    if(pathname === searchPath) {
+        router.push(searchPath + '?' + createQueryString('q', debouncedSearchValue));
+    }
+  }, [debouncedSearchValue, currentMode, pathname, router, createQueryString]);
+
+  const handleSearchSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    const searchPath = currentMode === 'wholesale' ? '/wholesale' : '/shop';
+    router.push(searchPath + '?' + createQueryString('q', searchValue));
+    if(isMobile) setShowSearch(false);
   };
+  
+  const handleSearchIconClick = () => {
+    if (isMobile) {
+      setShowSearch(!showSearch);
+    }
+  }
 
   const CartIcon = currentMode === 'wholesale' ? Briefcase : ShoppingCart;
   const cartLink = currentMode === 'wholesale' ? '/cart?mode=wholesale' : '/cart';
@@ -102,11 +146,19 @@ function HeaderContent() {
             </RadioGroup>
         </div>
         <div className="col-span-4 flex justify-center">
-             <form onSubmit={handleSearch} className="relative w-full max-w-sm">
+             <form onSubmit={handleSearchSubmit} className="relative w-full max-w-sm">
                 <Input
                   name="search"
                   className="pl-10"
                   placeholder="Search products..."
+                  value={searchValue}
+                  onChange={(e) => setSearchValue(e.target.value)}
+                  onClick={() => {
+                    const searchPath = currentMode === 'wholesale' ? '/wholesale' : '/shop';
+                    if (pathname !== searchPath) {
+                      router.push(searchPath);
+                    }
+                  }}
                 />
                 <Button variant="ghost" size="icon" className="absolute left-1 top-1/2 -translate-y-1/2 h-8 w-8 text-muted-foreground" type="submit">
                   <Search className="h-4 w-4" />
@@ -188,7 +240,7 @@ function HeaderContent() {
             </Link>
         </div>
         <div className="flex items-center justify-end space-x-1">
-            <Button variant="ghost" size="icon" onClick={() => setShowSearch(!showSearch)}>
+            <Button variant="ghost" size="icon" onClick={handleSearchIconClick}>
                 <Search className="h-5 w-5" />
                 <span className="sr-only">Search</span>
             </Button>
@@ -207,12 +259,20 @@ function HeaderContent() {
         </div>
          {showSearch && (
             <div className="absolute top-full left-0 w-full bg-background p-4 border-b">
-                <form onSubmit={handleSearch} className="relative w-full max-w-sm mx-auto">
+                <form onSubmit={handleSearchSubmit} className="relative w-full max-w-sm mx-auto">
                     <Input
                         name="search"
                         className="pl-10"
                         placeholder="Search products..."
                         autoFocus
+                        value={searchValue}
+                        onChange={(e) => setSearchValue(e.target.value)}
+                        onClick={() => {
+                            const searchPath = currentMode === 'wholesale' ? '/wholesale' : '/shop';
+                            if (pathname !== searchPath) {
+                              router.push(searchPath);
+                            }
+                          }}
                     />
                     <Button variant="ghost" size="icon" className="absolute left-1 top-1/2 -translate-y-1/2 h-8 w-8 text-muted-foreground" type="submit">
                         <Search className="h-4 w-4" />
