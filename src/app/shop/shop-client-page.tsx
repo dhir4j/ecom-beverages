@@ -10,6 +10,9 @@ import { Label } from "@/components/ui/label";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
+import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
+import { Carousel, CarouselContent, CarouselItem } from "@/components/ui/carousel";
+import { useIsMobile } from "@/hooks/use-mobile";
 
 function FilterSidebar({
   selectedCategories,
@@ -42,16 +45,9 @@ function FilterSidebar({
     );
   };
 
-  return (
-    <Card className="sticky top-20">
-      <CardContent className="p-4">
-        <div className="mb-4 flex items-center justify-between">
-          <h3 className="text-lg font-semibold">Filters</h3>
-          <Button variant="ghost" size="sm" onClick={clearFilters}>Clear All</Button>
-        </div>
-        <Separator className="my-4" />
-        
-        <div>
+  const filterContent = (
+    <>
+      <div>
           <h4 className="mb-2 font-semibold">Category</h4>
           <div className="space-y-2">
             {categories.map((category) => (
@@ -82,6 +78,40 @@ function FilterSidebar({
             ))}
           </div>
         </div>
+    </>
+  )
+
+  const isMobile = useIsMobile();
+
+  if (isMobile) {
+    return (
+        <Accordion type="single" collapsible className="w-full mb-6">
+            <AccordionItem value="item-1">
+                <AccordionTrigger>
+                    <div className="flex items-center justify-between w-full">
+                         <h3 className="text-lg font-semibold">Filters</h3>
+                    </div>
+                </AccordionTrigger>
+                <AccordionContent>
+                    <div className="p-4 border-t">
+                        <Button variant="ghost" size="sm" onClick={clearFilters} className="w-full mb-4">Clear All</Button>
+                        {filterContent}
+                    </div>
+                </AccordionContent>
+            </AccordionItem>
+        </Accordion>
+    );
+  }
+
+  return (
+    <Card className="sticky top-20">
+      <CardContent className="p-4">
+        <div className="mb-4 flex items-center justify-between">
+          <h3 className="text-lg font-semibold">Filters</h3>
+          <Button variant="ghost" size="sm" onClick={clearFilters}>Clear All</Button>
+        </div>
+        <Separator className="my-4" />
+        {filterContent}
       </CardContent>
     </Card>
   );
@@ -98,6 +128,7 @@ export function ShopClientPage({ products, categories, brands, isWholesale }: Sh
   const searchParams = useSearchParams();
   const initialCategory = searchParams.get("category");
   const searchQuery = searchParams.get("q");
+  const isMobile = useIsMobile();
 
   const [selectedCategories, setSelectedCategories] = useState<string[]>(initialCategory ? [decodeURIComponent(initialCategory)] : []);
   const [selectedBrands, setSelectedBrands] = useState<string[]>([]);
@@ -125,6 +156,49 @@ export function ShopClientPage({ products, categories, brands, isWholesale }: Sh
     setSelectedBrands([]);
   }
 
+  const renderProductList = () => {
+    if (filteredProducts.length === 0) {
+        return (
+            <div className="flex h-64 items-center justify-center rounded-lg border-2 border-dashed">
+                <div className="text-center">
+                    <h3 className="text-xl font-semibold">No Products Found</h3>
+                    <p className="text-muted-foreground mt-2">Try adjusting your filters or search term.</p>
+                </div>
+            </div>
+        );
+    }
+    
+    if (isMobile && isWholesale) {
+        return (
+            <Carousel opts={{ align: 'start', loop: true }} className="w-full">
+                <CarouselContent className="-ml-2">
+                    {filteredProducts.map(product => (
+                        <CarouselItem key={product.id} className="basis-[45%] pl-2">
+                             <ProductCard
+                                product={product}
+                                isWholesale={isWholesale}
+                            />
+                        </CarouselItem>
+                    ))}
+                </CarouselContent>
+            </Carousel>
+        )
+    }
+
+    return (
+        <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
+            {filteredProducts.map((product) => (
+            <ProductCard
+                key={product.id}
+                product={product}
+                isWholesale={isWholesale}
+            />
+            ))}
+        </div>
+    );
+  }
+
+
   return (
     <div className="container mx-auto px-4 py-8">
       <div className="mb-8 text-center">
@@ -146,24 +220,7 @@ export function ShopClientPage({ products, categories, brands, isWholesale }: Sh
           />
         </div>
         <div className="md:col-span-3">
-          {filteredProducts.length > 0 ? (
-            <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
-              {filteredProducts.map((product) => (
-                <ProductCard
-                  key={product.id}
-                  product={product}
-                  isWholesale={isWholesale}
-                />
-              ))}
-            </div>
-          ) : (
-            <div className="flex h-64 items-center justify-center rounded-lg border-2 border-dashed">
-                <div className="text-center">
-                    <h3 className="text-xl font-semibold">No Products Found</h3>
-                    <p className="text-muted-foreground mt-2">Try adjusting your filters or search term.</p>
-                </div>
-            </div>
-          )}
+            {renderProductList()}
         </div>
       </div>
     </div>
