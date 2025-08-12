@@ -188,26 +188,28 @@ function HeaderContent() {
   );
 
   const mobileHeader = (
-    <>
-        <Button asChild variant="outline" size="icon" className="lg:hidden">
-            <Link href={allItemsLink}>
-                <LayoutGrid className="h-5 w-5" />
-                <span className="sr-only">All Items</span>
-            </Link>
-        </Button>
-        <div className="flex-1 flex items-center justify-center">
-            <Link href="/" className="flex items-center space-x-2">
-                <Image
-                    src="/images/logo.png"
-                    alt="SK Traders Logo"
-                    width={50}
-                    height={50}
-                    className="h-12 w-auto"
-                />
-                <span className="font-logo text-2xl font-bold whitespace-nowrap">SK Traders</span>
-            </Link>
+    <div className="flex items-center justify-between w-full">
+        <div className="flex items-center">
+            <Button asChild variant="outline" size="icon">
+                <Link href={allItemsLink}>
+                    <LayoutGrid className="h-5 w-5" />
+                    <span className="sr-only">All Items</span>
+                </Link>
+            </Button>
         </div>
-        <div className="flex items-center justify-end space-x-1">
+        
+        <Link href="/" className="flex items-center space-x-2">
+            <Image
+                src="/images/logo.png"
+                alt="SK Traders Logo"
+                width={50}
+                height={50}
+                className="h-12 w-auto"
+            />
+            <span className="font-logo text-2xl font-bold whitespace-nowrap">SK Traders</span>
+        </Link>
+        
+        <div className="flex items-center space-x-1">
             <Button variant="ghost" size="icon" onClick={handleSearchIconClick}>
                 <Search className="h-5 w-5" />
                 <span className="sr-only">Search</span>
@@ -225,7 +227,8 @@ function HeaderContent() {
                 </Link>
             </div>
         </div>
-         {showSearch && (
+        
+        {showSearch && (
             <div className="absolute top-full left-0 w-full bg-background p-4 border-b">
                 <form onSubmit={handleSearchSubmit} className="relative w-full max-w-sm mx-auto">
                     <Input
@@ -249,7 +252,7 @@ function HeaderContent() {
                 </form>
             </div>
         )}
-    </>
+    </div>
   );
 
   return (
