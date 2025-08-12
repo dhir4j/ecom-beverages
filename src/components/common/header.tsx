@@ -149,7 +149,7 @@ function HeaderContent() {
              <form onSubmit={handleSearchSubmit} className="relative w-full max-w-sm">
                 <Input
                   name="search"
-                  className="pl-10"
+                  className="pl-10 rounded-full"
                   placeholder="Search products..."
                   value={searchValue}
                   onChange={(e) => setSearchValue(e.target.value)}
