@@ -19,6 +19,7 @@ import { useTheme } from "@/context/theme-provider";
 import { Input } from "../ui/input";
 import { useRouter } from "next/navigation";
 import { cn } from "@/lib/utils";
+import { useEffect, useState } from "react";
 
 function ThemeSwitcher() {
     const { theme, setTheme } = useTheme();
@@ -40,10 +41,14 @@ export function Header() {
   const router = useRouter();
   const pathname = usePathname();
   const searchParams = useSearchParams();
+  const [currentMode, setCurrentMode] = useState<'retail' | 'wholesale'>('retail');
 
-  const isWholesalePath = pathname.startsWith('/wholesale');
-  const isWholesaleQuery = searchParams.get('mode') === 'wholesale';
-  const currentMode = isWholesalePath || isWholesaleQuery ? 'wholesale' : 'retail';
+  useEffect(() => {
+    const isWholesalePath = pathname.startsWith('/wholesale');
+    const isWholesaleQuery = searchParams.get('mode') === 'wholesale';
+    setCurrentMode(isWholesalePath || isWholesaleQuery ? 'wholesale' : 'retail');
+  }, [pathname, searchParams]);
+  
 
   const { itemCount } = useCart(currentMode);
   const isMobile = useIsMobile();
