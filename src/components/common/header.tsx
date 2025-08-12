@@ -263,8 +263,8 @@ function HeaderContent() {
       <div className="container flex h-20 items-center">
         {isMobile ? mobileHeader : desktopNav}
       </div>
-       {!isMobile && (
-          <div className="hidden xl:hidden bg-background/80 backdrop-blur-md border-b">
+       {isMobile && (
+          <div className="xl:hidden bg-background/80 backdrop-blur-md border-b">
             <div className="container p-2">
               <RadioGroup value={currentMode} onValueChange={handleModeChange} className="grid grid-cols-2 gap-2 rounded-full border bg-muted p-1">
                 <div>
@@ -290,3 +290,5 @@ export function Header() {
         </Suspense>
     )
 }
+
+    
