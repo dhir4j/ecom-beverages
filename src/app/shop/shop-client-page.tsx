@@ -1,3 +1,4 @@
+
 "use client";
 
 import { useState, useEffect } from "react";
@@ -90,9 +91,10 @@ interface ShopClientPageProps {
   products: Product[];
   categories: string[];
   brands: string[];
+  isWholesale: boolean;
 }
 
-export function ShopClientPage({ products, categories, brands }: ShopClientPageProps) {
+export function ShopClientPage({ products, categories, brands, isWholesale }: ShopClientPageProps) {
   const searchParams = useSearchParams();
   const initialCategory = searchParams.get("category");
   const searchQuery = searchParams.get("q");
@@ -150,6 +152,7 @@ export function ShopClientPage({ products, categories, brands }: ShopClientPageP
                 <ProductCard
                   key={product.id}
                   product={product}
+                  isWholesale={isWholesale}
                 />
               ))}
             </div>

@@ -6,15 +6,18 @@ import Link from "next/link";
 import type { Product } from "@/types/product";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
-import { usePathname } from "next/navigation";
+import { usePathname, useSearchParams } from "next/navigation";
 
 interface ProductCardProps {
   product: Product;
+  isWholesale?: boolean;
 }
 
-export function ProductCard({ product }: ProductCardProps) {
+export function ProductCard({ product, isWholesale: isWholesaleProp }: ProductCardProps) {
   const pathname = usePathname();
-  const isWholesale = pathname.startsWith('/wholesale');
+  const searchParams = useSearchParams();
+  
+  const isWholesale = isWholesaleProp ?? pathname.startsWith('/wholesale') ?? searchParams.get('mode') === 'wholesale';
   const productUrl = isWholesale ? `/p/${product.id}?mode=wholesale` : `/p/${product.id}`;
 
   return (

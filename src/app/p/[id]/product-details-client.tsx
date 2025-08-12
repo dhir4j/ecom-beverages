@@ -180,7 +180,7 @@ export function ProductDetailsClient({ product, similarProducts, isWholesale }: 
                     {similarProducts.map((p) => (
                         <CarouselItem key={p.id} className="md:basis-1/2 lg:basis-1/4">
                              <div className="p-1">
-                                <ProductCard product={p} />
+                                <ProductCard product={p} isWholesale={isWholesale} />
                              </div>
                         </CarouselItem>
                     ))}

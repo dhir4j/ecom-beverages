@@ -25,7 +25,7 @@ export default function WholesalePage() {
 
   return (
     <>
-      <ShopClientPage products={products} categories={categories} brands={brands} />
+      <ShopClientPage products={products} categories={categories} brands={brands} isWholesale={true} />
     </>
   );
 }
