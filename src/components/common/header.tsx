@@ -191,7 +191,7 @@ function HeaderContent() {
             <span className="sr-only">Open menu</span>
           </Button>
         </SheetTrigger>
-        <SheetContent side="left" className="w-full max-w-sm">
+        <SheetContent side="left" className="w-full max-w-sm bg-background">
           <SheetHeader className="mb-6 border-b pb-4">
             <SheetTitle className="text-left">Menu</SheetTitle>
           </SheetHeader>
@@ -230,10 +230,11 @@ function HeaderContent() {
                 <Link href="/customer-care" className="flex items-center gap-3 rounded-md p-2 hover:bg-muted"><Phone className="h-5 w-5" />Customer Care</Link>
               </SheetClose>
             </nav>
-            <Separator className="my-auto" />
-            <div className="flex items-center justify-between">
-                <span>Toggle Theme</span>
-                <ThemeSwitcher />
+            <div className="mt-auto border-t pt-4">
+                <div className="flex items-center justify-between">
+                    <span className="text-sm text-muted-foreground">Toggle Theme</span>
+                    <ThemeSwitcher />
+                </div>
             </div>
           </div>
         </SheetContent>
@@ -261,24 +262,26 @@ function HeaderContent() {
   );
 
   return (
-    <header className="sticky top-0 z-50 w-full border-b bg-primary/20 backdrop-blur-md transition-colors duration-300">
+    <header className="sticky top-0 z-50 w-full border-b bg-background/80 backdrop-blur-md transition-colors duration-300">
       <div className="container flex h-20 items-center">
         {isMobile ? mobileHeader : desktopNav}
       </div>
-      <div className="xl:hidden bg-background/80 backdrop-blur-md border-b">
-        <div className="container p-2">
-          <RadioGroup value={currentMode} onValueChange={handleModeChange} className="grid grid-cols-2 gap-2 rounded-full border bg-muted p-1">
-            <div>
-                <RadioGroupItem value="retail" id="r1-mobile-bar" className="sr-only" />
-                <Label htmlFor="r1-mobile-bar" className={cn("block w-full rounded-full py-1.5 text-center text-sm font-medium cursor-pointer transition-colors", currentMode === 'retail' ? 'bg-primary text-primary-foreground' : 'hover:bg-accent')}>Retail</Label>
+       {!isMobile && (
+          <div className="hidden xl:hidden bg-background/80 backdrop-blur-md border-b">
+            <div className="container p-2">
+              <RadioGroup value={currentMode} onValueChange={handleModeChange} className="grid grid-cols-2 gap-2 rounded-full border bg-muted p-1">
+                <div>
+                    <RadioGroupItem value="retail" id="r1-mobile-bar" className="sr-only" />
+                    <Label htmlFor="r1-mobile-bar" className={cn("block w-full rounded-full py-1.5 text-center text-sm font-medium cursor-pointer transition-colors", currentMode === 'retail' ? 'bg-primary text-primary-foreground' : 'hover:bg-accent')}>Retail</Label>
+                </div>
+                <div>
+                    <RadioGroupItem value="wholesale" id="r2-mobile-bar" className="sr-only" />
+                    <Label htmlFor="r2-mobile-bar" className={cn("block w-full rounded-full py-1.5 text-center text-sm font-medium cursor-pointer transition-colors", currentMode === 'wholesale' ? 'bg-primary text-primary-foreground' : 'hover:bg-accent')}>Wholesale</Label>
+                </div>
+              </RadioGroup>
             </div>
-            <div>
-                <RadioGroupItem value="wholesale" id="r2-mobile-bar" className="sr-only" />
-                <Label htmlFor="r2-mobile-bar" className={cn("block w-full rounded-full py-1.5 text-center text-sm font-medium cursor-pointer transition-colors", currentMode === 'wholesale' ? 'bg-primary text-primary-foreground' : 'hover:bg-accent')}>Wholesale</Label>
-            </div>
-          </RadioGroup>
-        </div>
-      </div>
+          </div>
+       )}
     </header>
   );
 }
@@ -290,5 +293,3 @@ export function Header() {
         </Suspense>
     )
 }
-
-    
