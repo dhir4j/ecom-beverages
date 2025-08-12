@@ -59,7 +59,7 @@ export async function Footer() {
           </ul>
         </div>
       </div>
-      <div className="border-t border-border bg-muted py-4">
+      <div className="border-t bg-background py-4">
         <div className="container mx-auto flex flex-col items-center justify-between px-4 sm:flex-row">
             <p className="text-sm">
                 © {new Date().getFullYear()} SK Traders. All rights reserved.

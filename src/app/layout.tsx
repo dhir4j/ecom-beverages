@@ -6,6 +6,7 @@ import { Header } from '@/components/common/header';
 import { Footer } from '@/components/common/footer';
 import { Toaster } from '@/components/ui/toaster';
 import { CartProvider } from '@/context/cart-context';
+import { ThemeProvider } from '@/context/theme-provider';
 
 const inter = Inter({ subsets: ['latin'], variable: '--font-inter' });
 const poppins = Poppins({ 
@@ -25,19 +26,26 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className="h-full dark">
+    <html lang="en" className="h-full" suppressHydrationWarning>
       <head>
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
         <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&family=Poppins:wght@600;700&display=swap" rel="stylesheet" />
       </head>
       <body className={cn('font-body antialiased flex flex-col min-h-screen', inter.variable, poppins.variable)}>
-        <CartProvider>
-            <Header />
-            <main className="flex-grow">{children}</main>
-            <Footer />
-            <Toaster />
-        </CartProvider>
+        <ThemeProvider
+            attribute="class"
+            defaultTheme="dark"
+            enableSystem
+            disableTransitionOnChange
+        >
+            <CartProvider>
+                <Header />
+                <main className="flex-grow">{children}</main>
+                <Footer />
+                <Toaster />
+            </CartProvider>
+        </ThemeProvider>
       </body>
     </html>
   );

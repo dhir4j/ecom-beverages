@@ -8,25 +8,25 @@ body {
 
 @layer base {
   :root {
-    --background: 216 28% 7%; /* #0A1016 */
-    --foreground: 220 13% 91%; /* #E2E8F0 */
-    --card: 217 33% 17%;
-    --card-foreground: 220 13% 91%;
-    --popover: 216 28% 7%;
-    --popover-foreground: 220 13% 91%;
-    --primary: 201 82% 53%; /* #0EA5E9 */
-    --primary-foreground: 0 0% 98%;
-    --secondary: 174 80% 40%; /* #14B8A6 */
-    --secondary-foreground: 0 0% 98%;
-    --muted: 215 14% 34%; /* #475569 */
-    --muted-foreground: 215 14% 60%;
-    --accent: 82 78% 56%; /* #A3E635 */
-    --accent-foreground: 12 17% 9%;
-    --destructive: 0 72% 51%; /* #DC2626 */
-    --destructive-foreground: 0 0% 98%;
-    --border: 217 33% 25%;
-    --input: 217 33% 17%;
-    --ring: 201 82% 53%;
+    --background: 210 40% 98%;
+    --foreground: 222.2 84% 4.9%;
+    --card: 210 40% 100%;
+    --card-foreground: 222.2 84% 4.9%;
+    --popover: 210 40% 100%;
+    --popover-foreground: 222.2 84% 4.9%;
+    --primary: 201 82% 53%;
+    --primary-foreground: 210 40% 98%;
+    --secondary: 174 80% 40%;
+    --secondary-foreground: 210 40% 98%;
+    --muted: 210 40% 96.1%;
+    --muted-foreground: 215.4 16.3% 46.9%;
+    --accent: 82 78% 56%;
+    --accent-foreground: 222.2 47.4% 11.2%;
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 210 40% 98%;
+    --border: 214.3 31.8% 91.4%;
+    --input: 214.3 31.8% 91.4%;
+    --ring: 222.2 84% 4.9%;
     --chart-1: 12 76% 61%;
     --chart-2: 173 58% 39%;
     --chart-3: 197 37% 24%;
@@ -85,7 +85,6 @@ body {
   }
   body {
     @apply bg-background text-foreground;
-    background-color: #0A1016;
   }
   h1, h2, h3, h4, h5, h6 {
     @apply font-headline;
@@ -94,18 +93,17 @@ body {
 
 @layer utilities {
   .bg-glass-light {
-    @apply bg-slate-900/55 backdrop-blur-[20px];
+    @apply bg-white/60 backdrop-blur-[18px];
   }
   .bg-glass-dark {
-    @apply bg-black/55 backdrop-blur-[20px];
+    @apply bg-slate-900/55 backdrop-blur-[20px];
   }
   .dark .bg-glass-light {
     @apply bg-slate-900/55 backdrop-blur-[20px];
   }
   .stroke-gradient {
     border: 1px solid;
-    border-image-source: linear-gradient(to bottom, rgba(255, 255, 255, 0.1), transparent);
-    border-image-slice: 1;
+    border-image-source: linear-gradient(to bottom, rgba(0, 0, 0, 0.1), transparent);
     box-shadow: 0 1px 0 0 rgba(11, 18, 32, 0.12);
   }
   .dark .stroke-gradient {
