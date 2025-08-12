@@ -1,3 +1,4 @@
+
 "use client";
 
 import Link from "next/link";
@@ -20,7 +21,7 @@ import { useRouter } from "next/navigation";
 import { cn } from "@/lib/utils";
 
 const navLinks: { href: string; label: string }[] = [
-    { href: "/shop", label: "Shop" },
+
 ];
 
 function ThemeSwitcher() {
@@ -107,8 +108,8 @@ export function Header() {
                     </Link>
                 ))}
                  <RadioGroup value={currentMode} onValueChange={handleModeChange} className="grid grid-cols-2 gap-2 rounded-full border bg-muted p-1">
-                    <Label htmlFor="r1-mobile" className={cn("rounded-full py-1.5 text-center text-sm cursor-pointer", currentMode === 'retail' && 'bg-primary text-primary-foreground')}>Retail</Label>
-                    <Label htmlFor="r2-mobile" className={cn("rounded-full py-1.5 text-center text-sm cursor-pointer", currentMode === 'wholesale' && 'bg-primary text-primary-foreground')}>Wholesale</Label>
+                    <Label htmlFor="r1-mobile" className={cn("rounded-full py-1.5 text-center text-sm font-medium cursor-pointer", currentMode === 'retail' && 'bg-primary text-primary-foreground')}>Retail</Label>
+                    <Label htmlFor="r2-mobile" className={cn("rounded-full py-1.5 text-center text-sm font-medium cursor-pointer", currentMode === 'wholesale' && 'bg-primary text-primary-foreground')}>Wholesale</Label>
                     <RadioGroupItem value="retail" id="r1-mobile" className="sr-only" />
                     <RadioGroupItem value="wholesale" id="r2-mobile" className="sr-only" />
                 </RadioGroup>
@@ -120,8 +121,8 @@ export function Header() {
         <div className="flex flex-1 items-center justify-start gap-4">
              {!isMobile && (
                 <RadioGroup value={currentMode} onValueChange={handleModeChange} className="grid grid-cols-2 gap-2 rounded-full border bg-muted p-1 w-52">
-                    <Label htmlFor="r1-desktop" className={cn("rounded-full py-1.5 text-center text-sm cursor-pointer transition-colors", currentMode === 'retail' && 'bg-primary text-primary-foreground')}>Retail</Label>
-                    <Label htmlFor="r2-desktop" className={cn("rounded-full py-1.5 text-center text-sm cursor-pointer transition-colors", currentMode === 'wholesale' && 'bg-primary text-primary-foreground')}>Wholesale</Label>
+                    <Label htmlFor="r1-desktop" className={cn("rounded-full py-1.5 text-center text-sm font-medium cursor-pointer transition-colors", currentMode === 'retail' && 'bg-primary text-primary-foreground')}>Retail</Label>
+                    <Label htmlFor="r2-desktop" className={cn("rounded-full py-1.5 text-center text-sm font-medium cursor-pointer transition-colors", currentMode === 'wholesale' && 'bg-primary text-primary-foreground')}>Wholesale</Label>
                     <RadioGroupItem value="retail" id="r1-desktop" className="sr-only" />
                     <RadioGroupItem value="wholesale" id="r2-desktop" className="sr-only" />
                 </RadioGroup>
