@@ -189,7 +189,7 @@ function HeaderContent() {
 
   const mobileHeader = (
     <div className="flex items-center justify-between w-full">
-        <div className="flex items-center">
+        <div className="flex-1">
             <Button asChild variant="outline" size="icon">
                 <Link href={allItemsLink}>
                     <LayoutGrid className="h-5 w-5" />
@@ -198,7 +198,7 @@ function HeaderContent() {
             </Button>
         </div>
         
-        <Link href="/" className="flex items-center space-x-2">
+        <Link href="/" className="flex items-center space-x-1">
             <Image
                 src="/images/logo.png"
                 alt="SK Traders Logo"
@@ -209,7 +209,7 @@ function HeaderContent() {
             <span className="font-logo text-2xl font-bold whitespace-nowrap">SK Traders</span>
         </Link>
         
-        <div className="flex items-center space-x-1">
+        <div className="flex flex-1 justify-end items-center space-x-0">
             <Button variant="ghost" size="icon" onClick={handleSearchIconClick}>
                 <Search className="h-5 w-5" />
                 <span className="sr-only">Search</span>
