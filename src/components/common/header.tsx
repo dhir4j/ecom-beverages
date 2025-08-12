@@ -21,7 +21,7 @@ import { useRouter } from "next/navigation";
 import { cn } from "@/lib/utils";
 
 const navLinks: { href: string; label: string }[] = [
-
+    { href: '/shop', label: 'All Items' },
 ];
 
 function ThemeSwitcher() {
@@ -70,16 +70,17 @@ export function Header() {
                 <Bot className="h-6 w-6 text-primary" />
                 <span className="font-bold">SK Traders</span>
             </Link>
-            <RadioGroup value={currentMode} onValueChange={handleModeChange} className="grid grid-cols-2 gap-2 rounded-full border bg-muted p-1 w-52">
-                <div>
-                    <RadioGroupItem value="retail" id="r1-desktop" className="sr-only" />
-                    <Label htmlFor="r1-desktop" className={cn("block w-full rounded-full py-1.5 text-center text-sm font-medium cursor-pointer transition-colors", currentMode === 'retail' && 'bg-primary text-primary-foreground')}>Retail</Label>
-                </div>
-                <div>
-                    <RadioGroupItem value="wholesale" id="r2-desktop" className="sr-only" />
-                    <Label htmlFor="r2-desktop" className={cn("block w-full rounded-full py-1.5 text-center text-sm font-medium cursor-pointer transition-colors", currentMode === 'wholesale' && 'bg-primary text-primary-foreground')}>Wholesale</Label>
-                </div>
-            </RadioGroup>
+             <nav className="flex items-center gap-4">
+                {navLinks.map((link) => (
+                    <Link
+                        key={link.href}
+                        href={link.href}
+                        className={cn("text-sm font-medium transition-colors hover:text-primary", pathname === link.href ? "text-primary" : "text-muted-foreground")}
+                    >
+                        {link.label}
+                    </Link>
+                ))}
+            </nav>
         </div>
         <div className="flex justify-center">
              <form onSubmit={handleSearch} className="relative w-full max-w-sm">
@@ -95,16 +96,28 @@ export function Header() {
             </form>
         </div>
         <div className="flex items-center justify-end space-x-2">
+            <RadioGroup value={currentMode} onValueChange={handleModeChange} className="grid grid-cols-2 gap-2 rounded-full border bg-muted p-1 w-52">
+                <div>
+                    <RadioGroupItem value="retail" id="r1-desktop" className="sr-only" />
+                    <Label htmlFor="r1-desktop" className={cn("block w-full rounded-full py-1.5 text-center text-sm font-medium cursor-pointer transition-colors", currentMode === 'retail' ? 'bg-primary text-primary-foreground' : 'hover:bg-accent')}>Retail</Label>
+                </div>
+                <div>
+                    <RadioGroupItem value="wholesale" id="r2-desktop" className="sr-only" />
+                    <Label htmlFor="r2-desktop" className={cn("block w-full rounded-full py-1.5 text-center text-sm font-medium cursor-pointer transition-colors", currentMode === 'wholesale' ? 'bg-primary text-primary-foreground' : 'hover:bg-accent')}>Wholesale</Label>
+                </div>
+            </RadioGroup>
             <ThemeSwitcher />
-            <Link href="/cart" className="relative">
-              <Button variant="ghost" size="icon">
-                <ShoppingCart className="h-5 w-5" />
-                <span className="sr-only">Shopping Cart</span>
-              </Button>
-               {itemCount > 0 && (
-                  <Badge className="absolute top-0 right-0 h-5 w-5 justify-center p-0">{itemCount}</Badge>
-                )}
-            </Link>
+            <div className="relative">
+              <Link href="/cart">
+                <Button variant="ghost" size="icon">
+                  <ShoppingCart className="h-5 w-5" />
+                  <span className="sr-only">Shopping Cart</span>
+                </Button>
+                 {itemCount > 0 && (
+                    <Badge className="absolute -top-1 -right-1 h-5 w-5 justify-center p-0">{itemCount}</Badge>
+                  )}
+              </Link>
+            </div>
         </div>
     </div>
   );
@@ -136,11 +149,11 @@ export function Header() {
                 <RadioGroup value={currentMode} onValueChange={handleModeChange} className="grid grid-cols-2 gap-2 rounded-full border bg-muted p-1">
                 <div>
                     <RadioGroupItem value="retail" id="r1-mobile" className="sr-only" />
-                    <Label htmlFor="r1-mobile" className={cn("block w-full rounded-full py-1.5 text-center text-sm font-medium cursor-pointer", currentMode === 'retail' && 'bg-primary text-primary-foreground')}>Retail</Label>
+                    <Label htmlFor="r1-mobile" className={cn("block w-full rounded-full py-1.5 text-center text-sm font-medium cursor-pointer", currentMode === 'retail' ? 'bg-primary text-primary-foreground' : 'hover:bg-accent')}>Retail</Label>
                 </div>
                 <div>
                     <RadioGroupItem value="wholesale" id="r2-mobile" className="sr-only" />
-                    <Label htmlFor="r2-mobile" className={cn("block w-full rounded-full py-1.5 text-center text-sm font-medium cursor-pointer", currentMode === 'wholesale' && 'bg-primary text-primary-foreground')}>Wholesale</Label>
+                    <Label htmlFor="r2-mobile" className={cn("block w-full rounded-full py-1.5 text-center text-sm font-medium cursor-pointer", currentMode === 'wholesale' ? 'bg-primary text-primary-foreground' : 'hover:bg-accent')}>Wholesale</Label>
                 </div>
             </RadioGroup>
             </nav>
@@ -161,21 +174,23 @@ export function Header() {
         </div>
         <div className="flex items-center justify-end space-x-2">
             <ThemeSwitcher />
-            <Link href="/cart" className="relative">
-                <Button variant="ghost" size="icon">
-                  <ShoppingCart className="h-5 w-5" />
-                  <span className="sr-only">Shopping Cart</span>
-                </Button>
-                {itemCount > 0 && (
-                    <Badge className="absolute top-0 right-0 h-5 w-5 justify-center p-0">{itemCount}</Badge>
-                )}
-            </Link>
+            <div className="relative">
+                <Link href="/cart">
+                    <Button variant="ghost" size="icon">
+                    <ShoppingCart className="h-5 w-5" />
+                    <span className="sr-only">Shopping Cart</span>
+                    </Button>
+                    {itemCount > 0 && (
+                        <Badge className="absolute -top-1 -right-1 h-5 w-5 justify-center p-0">{itemCount}</Badge>
+                    )}
+                </Link>
+            </div>
         </div>
     </>
   );
 
   return (
-    <header className="sticky top-0 z-50 w-full border-b bg-glass-light dark:bg-glass-dark transition-colors duration-300">
+    <header className="sticky top-0 z-50 w-full border-b bg-primary/20 backdrop-blur-md transition-colors duration-300">
       <div className="container flex h-24 items-center">
         {isMobile ? mobileHeader : desktopHeader}
       </div>
