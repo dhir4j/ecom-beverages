@@ -15,8 +15,8 @@ export async function Footer() {
                     src="/images/logowtext.png"
                     alt="SK Traders Logo"
                     width={150}
-                    height={40}
-                    className="h-24 w-auto"
+                    height={150}
+                    className="h-36 w-auto"
                 />
             </Link>
             <p className="text-sm">
