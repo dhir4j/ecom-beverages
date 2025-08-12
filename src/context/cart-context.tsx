@@ -36,16 +36,29 @@ const getInitialCartState = (mode: CartMode): CartItem[] => {
 export const CartProvider: React.FC<{ children: React.ReactNode }> = ({
   children,
 }) => {
-  const [retailCart, setRetailCart] = useState<CartItem[]>(() => getInitialCartState('retail'));
-  const [wholesaleCart, setWholesaleCart] = useState<CartItem[]>(() => getInitialCartState('wholesale'));
+  const [retailCart, setRetailCart] = useState<CartItem[]>([]);
+  const [wholesaleCart, setWholesaleCart] = useState<CartItem[]>([]);
+  const [isClient, setIsClient] = useState(false);
 
   useEffect(() => {
-    localStorage.setItem("retail_cart", JSON.stringify(retailCart));
-  }, [retailCart]);
+    setIsClient(true);
+    setRetailCart(getInitialCartState('retail'));
+    setWholesaleCart(getInitialCartState('wholesale'));
+  }, []);
 
   useEffect(() => {
-    localStorage.setItem("wholesale_cart", JSON.stringify(wholesaleCart));
-  }, [wholesaleCart]);
+    if(isClient) {
+      localStorage.setItem("retail_cart", JSON.stringify(retailCart));
+    }
+  }, [retailCart, isClient]);
+
+  useEffect(() => {
+    if(isClient) {
+        localStorage.setItem("wholesale_cart", JSON.stringify(wholesaleCart));
+    }
+  }, [wholesaleCart, isClient]);
+  
+  const { toast } = useToast();
   
   const getCartActions = (mode: CartMode) => {
     const isRetail = mode === 'retail';
@@ -111,11 +124,11 @@ export const CartProvider: React.FC<{ children: React.ReactNode }> = ({
         setCartItems([]);
     };
 
-    const itemCount = cartItems.reduce((total, item) => total + item.quantity, 0);
-    const totalPrice = cartItems.reduce(
+    const itemCount = isClient ? cartItems.reduce((total, item) => total + item.quantity, 0) : 0;
+    const totalPrice = isClient ? cartItems.reduce(
         (total, item) => total + item.price * item.quantity,
         0
-    );
+    ) : 0;
 
     return {
       cartItems,
