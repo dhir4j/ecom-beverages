@@ -38,12 +38,10 @@ async function TopPicksForCategory({ category }: { category: string }) {
           }}
           className="w-full"
         >
-          <CarouselContent>
+          <CarouselContent className="-ml-2">
             {products.map((product) => (
-              <CarouselItem key={product.id} className="basis-2/3 sm:basis-1/2">
-                <div className="p-1">
-                  <ProductCard product={product} />
-                </div>
+              <CarouselItem key={product.id} className="basis-1/2 pl-2 sm:basis-1/3">
+                <ProductCard product={product} />
               </CarouselItem>
             ))}
           </CarouselContent>
