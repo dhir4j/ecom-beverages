@@ -85,7 +85,7 @@ function HeaderContent() {
                     height={50}
                     className="h-12 w-auto"
                 />
-                <span className="font-pacifico text-2xl font-bold">SK Traders</span>
+                <span className="font-headline text-2xl font-bold">SK Traders</span>
             </Link>
             <RadioGroup value={currentMode} onValueChange={handleModeChange} className="grid grid-cols-2 gap-2 rounded-full border bg-muted p-1 w-52">
                 <div>
@@ -150,7 +150,7 @@ function HeaderContent() {
                     height={40}
                     className="h-10 w-auto"
                 />
-                 <span className="font-pacifico text-xl font-bold">SK Traders</span>
+                 <span className="font-headline text-xl font-bold">SK Traders</span>
             </Link>
              <Link
                 href={currentMode === 'wholesale' ? '/wholesale' : '/shop'}
