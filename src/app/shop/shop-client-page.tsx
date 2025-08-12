@@ -11,7 +11,7 @@ import { Checkbox } from "@/components/ui/checkbox";
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
-import { Carousel, CarouselContent, CarouselItem } from "@/components/ui/carousel";
+import { Carousel, CarouselContent, CarouselItem, CarouselPrevious, CarouselNext } from "@/components/ui/carousel";
 import { useIsMobile } from "@/hooks/use-mobile";
 
 function FilterSidebar({
@@ -168,12 +168,12 @@ export function ShopClientPage({ products, categories, brands, isWholesale }: Sh
         );
     }
     
-    if (isMobile && isWholesale) {
+    if (isMobile) {
         return (
-            <Carousel opts={{ align: 'start', loop: true }} className="w-full">
+            <Carousel opts={{ align: 'start', loop: filteredProducts.length > 2 }} className="w-full">
                 <CarouselContent className="-ml-2">
                     {filteredProducts.map(product => (
-                        <CarouselItem key={product.id} className="basis-[45%] pl-2">
+                        <CarouselItem key={product.id} className="basis-2/5 pl-2">
                              <ProductCard
                                 product={product}
                                 isWholesale={isWholesale}
@@ -181,6 +181,12 @@ export function ShopClientPage({ products, categories, brands, isWholesale }: Sh
                         </CarouselItem>
                     ))}
                 </CarouselContent>
+                {filteredProducts.length > 2 && (
+                    <>
+                        <CarouselPrevious className="ml-12" />
+                        <CarouselNext className="mr-12" />
+                    </>
+                )}
             </Carousel>
         )
     }
@@ -202,9 +208,12 @@ export function ShopClientPage({ products, categories, brands, isWholesale }: Sh
   return (
     <div className="container mx-auto px-4 py-8">
       <div className="mb-8 text-center">
-        <h1 className="text-4xl font-bold tracking-tight">Our Products</h1>
+        <h1 className="text-4xl font-bold tracking-tight">{isWholesale ? "Wholesale" : "Our Products"}</h1>
         <p className="mt-2 text-lg text-muted-foreground">
-          Browse our extensive collection of beverages.
+          {isWholesale 
+            ? "Bulk orders with the best prices."
+            : "Browse our extensive collection of beverages."
+          }
         </p>
       </div>
       <div className="grid grid-cols-1 gap-8 md:grid-cols-4">

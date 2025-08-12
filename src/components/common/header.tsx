@@ -120,6 +120,7 @@ function HeaderContent() {
 
   const CartIcon = currentMode === 'wholesale' ? Briefcase : ShoppingCart;
   const cartLink = currentMode === 'wholesale' ? '/cart?mode=wholesale' : '/cart';
+  const allItemsLink = currentMode === 'wholesale' ? '/wholesale' : '/shop';
 
   const desktopNav = (
     <div className="flex items-center w-full">
@@ -168,7 +169,7 @@ function HeaderContent() {
         </div>
         <div className="flex items-center justify-end space-x-2 flex-1">
             <Button asChild variant="outline" size="sm">
-                <Link href={currentMode === 'wholesale' ? '/wholesale' : '/shop'}>All Items</Link>
+                <Link href={allItemsLink}>All Items</Link>
              </Button>
             <ThemeSwitcher />
             <div className="relative">
@@ -188,35 +189,12 @@ function HeaderContent() {
 
   const mobileHeader = (
     <>
-        <Sheet>
-        <SheetTrigger asChild>
-            <Button variant="outline" size="icon" className="lg:hidden">
-            <LayoutGrid className="h-5 w-5" />
-            <span className="sr-only">Toggle Menu</span>
-            </Button>
-        </SheetTrigger>
-        <SheetContent side="left" className="w-[300px] sm:w-[400px] bg-glass-dark">
-            <SheetTitle className="sr-only">Menu</SheetTitle>
-            <nav className="flex flex-col gap-4">
-            <Link href="/" className="mb-4 flex items-center space-x-2">
-                <Image
-                    src="/images/logo.png"
-                    alt="SK Traders Logo"
-                    width={58}
-                    height={58}
-                    className="h-[3.6rem] w-auto"
-                />
-                <span className="font-logo text-2xl font-bold">SK Traders</span>
+        <Button asChild variant="outline" size="icon" className="lg:hidden">
+            <Link href={allItemsLink}>
+                <LayoutGrid className="h-5 w-5" />
+                <span className="sr-only">All Items</span>
             </Link>
-             <Link
-                href={currentMode === 'wholesale' ? '/wholesale' : '/shop'}
-                className={cn("block px-2 py-1 text-lg", pathname.startsWith("/shop") || pathname.startsWith("/wholesale") ? "text-primary" : "")}
-                >
-                All Items
-             </Link>
-            </nav>
-        </SheetContent>
-        </Sheet>
+        </Button>
         <div className="flex-1 flex items-center justify-center">
             <Link href="/" className="flex items-center space-x-2">
                 <Image
@@ -226,7 +204,7 @@ function HeaderContent() {
                     height={50}
                     className="h-12 w-auto"
                 />
-                <span className="font-logo text-2xl font-bold">SK Traders</span>
+                <span className="font-logo text-2xl font-bold whitespace-nowrap">SK Traders</span>
             </Link>
         </div>
         <div className="flex items-center justify-end space-x-1">

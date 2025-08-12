@@ -75,7 +75,7 @@ export async function Footer() {
                 © {new Date().getFullYear()} SK Traders. All rights reserved.
             </p>
             <p className="text-sm">
-                Designed with ♥ by a <a href="https://t.me/INTRXEL" target="_blank" rel="noopener noreferrer" className="font-semibold text-primary hover:underline">JacK</a>
+                Designed with ♥ by <a href="https://t.me/INTRXEL" target="_blank" rel="noopener noreferrer" className="font-semibold text-primary hover:underline">JacK</a>
             </p>
         </div>
       </div>
