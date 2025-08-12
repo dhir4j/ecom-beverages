@@ -1,6 +1,6 @@
 import type {Metadata} from 'next';
 import './globals.css';
-import { Inter, Poppins } from 'next/font/google';
+import { Inter, Poppins, Pacifico } from 'next/font/google';
 import { cn } from '@/lib/utils';
 import { Header } from '@/components/common/header';
 import { Footer } from '@/components/common/footer';
@@ -14,6 +14,11 @@ const poppins = Poppins({
   subsets: ['latin'], 
   weight: ['600', '700'],
   variable: '--font-poppins'
+});
+const pacifico = Pacifico({
+  subsets: ['latin'],
+  weight: ['400'],
+  variable: '--font-pacifico',
 });
 
 export const metadata: Metadata = {
@@ -31,9 +36,9 @@ export default function RootLayout({
       <head>
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
-        <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&family=Poppins:wght@600;700&display=swap" rel="stylesheet" />
+        <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&family=Pacifico&family=Poppins:wght@600;700&display=swap" rel="stylesheet" />
       </head>
-      <body className={cn('font-body antialiased flex flex-col min-h-screen', inter.variable, poppins.variable)}>
+      <body className={cn('font-body antialiased flex flex-col min-h-screen', inter.variable, poppins.variable, pacifico.variable)}>
         <ThemeProvider
             attribute="class"
             defaultTheme="dark"

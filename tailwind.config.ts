@@ -19,6 +19,7 @@ export default {
       fontFamily: {
         body: ['var(--font-inter)', 'sans-serif'],
         headline: ['var(--font-poppins)', 'sans-serif'],
+        pacifico: ['var(--font-pacifico)', 'cursive'],
         code: ['monospace'],
       },
       colors: {
@@ -91,10 +92,10 @@ export default {
         },
         'accordion-up': {
           from: {
-            height: 'var(--radix-accordion-content-height)',
+            height: '0',
           },
           to: {
-            height: '0',
+            height: 'var(--radix-accordion-content-height)',
           },
         },
       },
