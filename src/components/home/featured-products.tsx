@@ -1,8 +1,8 @@
-import { products } from "@/lib/data";
+import { getFeaturedProducts } from "@/lib/products";
 import { ProductCard } from "@/components/product/product-card";
 
-export function FeaturedProducts() {
-  const featuredProducts = products.filter((p) => p.isFeatured).slice(0, 4);
+export async function FeaturedProducts() {
+  const featuredProducts = await getFeaturedProducts();
 
   return (
     <section className="py-16 sm:py-24">
@@ -17,7 +17,7 @@ export function FeaturedProducts() {
         </div>
         <div className="grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-4">
           {featuredProducts.map((product) => (
-            <ProductCard key={product.id} product={product} isWholesale={false} />
+            <ProductCard key={product.id} product={product} />
           ))}
         </div>
       </div>

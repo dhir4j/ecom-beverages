@@ -1,7 +1,10 @@
 import { Bot, Mail, MapPin, Phone } from "lucide-react";
 import Link from "next/link";
+import { getCategories } from "@/lib/products";
 
-export function Footer() {
+export async function Footer() {
+  const categories = (await getCategories()).slice(0, 4);
+
   return (
     <footer className="bg-muted text-muted-foreground no-print">
       <div className="container mx-auto grid grid-cols-1 gap-8 px-4 py-12 md:grid-cols-4">
@@ -27,11 +30,14 @@ export function Footer() {
         
         <div>
           <h3 className="mb-4 text-lg font-semibold text-foreground">Categories</h3>
-          <ul className="space-y-2">
-            <li><Link href="/shop?category=Soft+Drinks" className="hover:text-primary">Soft Drinks</Link></li>
-            <li><Link href="/shop?category=Juices" className="hover:text-primary">Juices</Link></li>
-            <li><Link href="/shop?category=Energy+Drinks" className="hover:text-primary">Energy Drinks</Link></li>
-            <li><Link href="/shop?category=Water" className="hover:text-primary">Water</Link></li>
+           <ul className="space-y-2">
+            {categories.map((category) => (
+              <li key={category}>
+                <Link href={`/c/${encodeURIComponent(category)}`} className="hover:text-primary capitalize">
+                  {category}
+                </Link>
+              </li>
+            ))}
           </ul>
         </div>
 
