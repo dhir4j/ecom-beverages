@@ -23,8 +23,8 @@ interface ProductDetailsClientProps {
 const Description = ({ text }: { text: string }) => {
   const [isExpanded, setIsExpanded] = useState(false);
   const words = text.split(' ');
-  const isLongText = words.length > 150;
-  const displayText = isLongText && !isExpanded ? words.slice(0, 150).join(' ') + '...' : text;
+  const isLongText = words.length > 75;
+  const displayText = isLongText && !isExpanded ? words.slice(0, 75).join(' ') + '...' : text;
 
   return (
     <div className="prose prose-blue max-w-none text-muted-foreground">
