@@ -95,7 +95,7 @@ export function Header() {
             </form>
         </div>
         <div className="flex items-center justify-end space-x-2">
-            <Button asChild variant={pathname === "/shop" ? "secondary" : "ghost"} size="sm">
+            <Button asChild variant="outline" size="sm">
                 <Link href="/shop">All Items</Link>
              </Button>
             <ThemeSwitcher />
