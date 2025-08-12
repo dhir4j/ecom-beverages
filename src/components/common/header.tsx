@@ -75,9 +75,9 @@ function HeaderContent() {
   const cartLink = currentMode === 'wholesale' ? '/cart?mode=wholesale' : '/cart';
 
   const desktopHeader = (
-    <div className="hidden md:grid grid-cols-3 items-center w-full">
-        <div className="flex items-center gap-4">
-            <Link href="/" className="flex items-center space-x-2">
+    <div className="hidden md:grid grid-cols-12 items-center w-full gap-x-4">
+        <div className="col-span-5 flex items-center gap-4">
+            <Link href="/" className="flex items-center space-x-2 flex-shrink-0">
                 <Image
                     src="/images/logo.png"
                     alt="SK Traders Logo"
@@ -85,7 +85,7 @@ function HeaderContent() {
                     height={70}
                     className="h-[4.4rem] w-auto"
                 />
-                <span className="font-logo text-3xl font-bold">SK Traders</span>
+                <span className="font-logo text-3xl font-bold whitespace-nowrap">SK Traders</span>
             </Link>
             <RadioGroup value={currentMode} onValueChange={handleModeChange} className="grid grid-cols-2 gap-2 rounded-full border bg-muted p-1 w-52">
                 <div>
@@ -98,7 +98,7 @@ function HeaderContent() {
                 </div>
             </RadioGroup>
         </div>
-        <div className="flex justify-center">
+        <div className="col-span-4 flex justify-center">
              <form onSubmit={handleSearch} className="relative w-full max-w-sm">
                 <Input
                   name="search"
@@ -111,7 +111,7 @@ function HeaderContent() {
                 </Button>
             </form>
         </div>
-        <div className="flex items-center justify-end space-x-2">
+        <div className="col-span-3 flex items-center justify-end space-x-2">
             <Button asChild variant="outline" size="sm">
                 <Link href={currentMode === 'wholesale' ? '/wholesale' : '/shop'}>All Items</Link>
              </Button>
