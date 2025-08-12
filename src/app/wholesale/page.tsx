@@ -1,12 +1,13 @@
 
+
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useState, Suspense } from "react";
 import { Product } from "@/types/product";
 import { ShopClientPage } from "../shop/shop-client-page";
 import { getProducts } from "@/lib/products";
 
-export default function WholesalePage() {
+function WholesalePageContent() {
   const [products, setProducts] = useState<Product[]>([]);
   const [categories, setCategories] = useState<string[]>([]);
   const [brands, setBrands] = useState<string[]>([]);
@@ -24,8 +25,14 @@ export default function WholesalePage() {
   }, []);
 
   return (
-    <>
-      <ShopClientPage products={products} categories={categories} brands={brands} isWholesale={true} />
-    </>
+    <ShopClientPage products={products} categories={categories} brands={brands} isWholesale={true} />
   );
+}
+
+export default function WholesalePage() {
+  return (
+    <Suspense fallback={<div>Loading wholesale products...</div>}>
+      <WholesalePageContent />
+    </Suspense>
+  )
 }

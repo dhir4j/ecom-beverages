@@ -1,4 +1,5 @@
 
+
 "use client";
 
 import Image from "next/image";
@@ -15,9 +16,9 @@ function CartItemContent({ item }: { item: CartItemType }) {
   const pathname = usePathname();
   const searchParams = useSearchParams();
   
-  const isWholesalePath = pathname.startsWith('/wholesale');
+  const isWholesalePath = pathname.startsWith('/wholesale') || pathname.startsWith('/cart');
   const isWholesaleQuery = searchParams.get('mode') === 'wholesale';
-  const isWholesale = isWholesalePath || isWholesaleQuery;
+  const isWholesale = isWholesalePath && isWholesaleQuery;
   
   const mode = isWholesale ? 'wholesale' : 'retail';
   const { updateQuantity, removeFromCart } = useCart(mode);
